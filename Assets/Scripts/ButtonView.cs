@@ -7,6 +7,8 @@ public class ButtonView : MonoBehaviour, IPointerDownHandler  // required interf
 	public static Controller controller;
 
 	/**
+	 * Controller OnMouseDown with name of clicked parent.
+	 * 
 	 * Test case:  Test.  Port.  Change view.  Expect minimal view code.  
 	 *
 	 * Test case:  2015 Another person is locking the editor file.  I want to edit the code of the button callback.

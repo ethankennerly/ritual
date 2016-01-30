@@ -83,4 +83,10 @@ public class Model
 		}
 		return letters;
 	}
+
+	public void Select(string tileName)
+	{
+		int tileIndex = int.Parse(tileName.Split('_')[1]);
+		tileSelecteds[tileIndex] = !tileSelecteds[tileIndex];
+	}
 }

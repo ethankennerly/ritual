@@ -14,7 +14,8 @@ public class Controller
 
 	public void OnMouseDown(string name)
 	{
-		Debug.Log("OnMouseDown: " + name);
+		Debug.Log("Controller.OnMouseDown: " + name);
+		model.Select(name);
 	}
 
 	public void Update()
