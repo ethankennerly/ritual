@@ -1,5 +1,8 @@
+FEATURES
+	Press W button.
+
 TODO
-	See 3x3 grid of letters.
+	See 3x3 grid of letter buttons.
 	Load letters into grid.
 	Click a letter to highlight.
 	Read to select letters.
