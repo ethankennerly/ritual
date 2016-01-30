@@ -1,0 +1,53 @@
+TODO
+	See 3x3 grid of letters.
+	Load letters into grid.
+	Click a letter to highlight.
+	Read to select letters.
+	Drag over letters.
+	Recognize word in dictionary.
+	Specify words.
+	See score up:  1 point per letter.
+	Clear all words.  Unlock next level.
+	Hint:  Highlight first letter of a word that could clear board.
+		Hint again:  show another first letter.
+	See an animation.
+	Hear a sound.
+	Experiment with swap two letters to connect words.
+		End level after fixed number of moves.
+		Fill in other letters.
+	Read theme.
+	Love level theme.
+	Select a level theme.
+	Money level theme.
+	Power level theme.
+	Control level theme.
+	Health level theme.
+	Fame level theme.
+	Intelligence level theme.
+	Focus level theme.
+	Charisma level theme.
+	Peace level theme.
+	Healing level theme.
+	Success level theme.
+	Confidence level theme.
+
+REFERENCE GAMES
+
+	LoveSpell (by me)
+	Spellstone (by me)
+	WordBrain
+	All Words Up
+	W.E.L.D.E.R.
+	DropWords
+	AlphaBetty
+
+REFERENCE PSYCHOLOGY
+
+"""
+Basketball superstar Michael Jordan wore his North Carolina shorts underneath his Chicago Bulls shorts in every game; Curtis Martin of the New York Jets reads Psalm 91 before every game. And Wade Boggs, former third baseman for the Boston Red Sox, woke up at the same time each day, ate chicken before each game, took exactly 117 ground balls in practice, took batting practice at 5:17, and ran sprints at 7:17. (Boggs also wrote the Hebrew word Chai (“living”) in the dirt before each at bat. Boggs was not Jewish.) Do rituals like these actually improve performance? In one recent experiment, people received either a “lucky golf ball” or an ordinary golf ball, and then performed a golf task; in another, people performed a motor dexterity task and were either asked to simply start the game or heard the researcher say “I’ll cross fingers for you” before starting the game. The superstitious rituals enhanced people’s confidence in their abilities, motivated greater effort – and improved subsequent performance. These findings are consistent with research in sport psychology demonstrating the performance benefits of pre-performance routines, from improving attention and execution to increasing emotional stability and confidence.
+"""
+http://www.scientificamerican.com/article/why-rituals-work/
+
+
+https://en.wikipedia.org/wiki/Ritual
+
