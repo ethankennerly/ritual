@@ -6,7 +6,8 @@ TODO
 	Load letters into grid.
 	Click a letter to highlight.
 	Read to select letters.
-	Drag over letters.
+	Drag over adjacent letters.
+	Mouse up.  Submit word.
 	Recognize word in dictionary.
 	Specify words.
 	See score up:  1 point per letter.
@@ -53,4 +54,22 @@ http://www.scientificamerican.com/article/why-rituals-work/
 
 
 https://en.wikipedia.org/wiki/Ritual
+
+JOURNAL
+
+
+Sat 01/30/2016 
+11:41
+
+
+See 3x3 grid of letter buttons.
+
+	-3 hours: Layout 3x3, 4x4, 5x5, 4x1, 5x1.
+		Name.
+		Read button name from view.
+		Wire to model.
+
+	-3 hours:  Program NxN.
+		Instantiate to layout grid.
+		Name.
 
