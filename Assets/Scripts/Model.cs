@@ -8,6 +8,7 @@ public class Model
 	public int rowCountMax = 5;
 	public int tileCountMax = 15;
 	public string[] tileLetters;
+	public bool[] tileSelecteds;
 
 	// I wish the API were as simple as JavaScript and Python:
 	// http://stackoverflow.com/questions/1126915/how-do-i-split-a-string-by-a-multi-character-delimiter-in-c
@@ -54,6 +55,7 @@ public class Model
 		gridIndex = newGridIndex;
 		grid = grids[gridIndex];
 		tileLetters = GetTileLetters(grid);
+		tileSelecteds = new bool[tileCountMax];
 	}
 
 	/**

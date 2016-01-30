@@ -22,6 +22,6 @@ public class ButtonView : MonoBehaviour, IPointerDownHandler  // required interf
 	 */
 	public void OnPointerDown (PointerEventData eventData) 
 	{
-		controller.OnMouseDown(name);
+		controller.OnMouseDown(transform.parent.gameObject.name);
 	}
 }

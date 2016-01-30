@@ -19,6 +19,7 @@ public class Controller
 
 	public void Update()
 	{
-		view.UpdateTiles(model.tileLetters, model.invisible);
+		view.UpdateLetters(model.tileLetters, model.invisible);
+		view.UpdateSelecteds(model.tileSelecteds);
 	}
 }
