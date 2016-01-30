@@ -9,10 +9,16 @@ public class Controller
 	{
 		model.Start();
 		view.Start();
+		view.SetupTiles(model.tileCountMax);
 	}
 
 	public void OnMouseDown(string name)
 	{
 		Debug.Log("OnMouseDown: " + name);
+	}
+
+	public void Update()
+	{
+		view.UpdateTiles(model.tileLetters, model.invisible);
 	}
 }

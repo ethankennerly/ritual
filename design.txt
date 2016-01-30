@@ -1,15 +1,15 @@
 FEATURES
 	Press W button.
 	See 3x4 grid of letter buttons.
+	Load letters into grid.
 
 TODO
-	Load letters into grid.
 	Click a letter to highlight.
-	Read to select letters.
 	Drag over adjacent letters.
 	Mouse up.  Submit word.
 	Recognize word in dictionary.
-	Specify words.
+	Remove those letters.
+	Read to select letters.
 	See score up:  1 point per letter.
 	Clear all words.  Unlock next level.
 	Hint:  Highlight first letter of a word that could clear board.

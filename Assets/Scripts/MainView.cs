@@ -5,13 +5,14 @@ public class MainView : MonoBehaviour
 {
 	private Controller controller = new Controller();
 
-	void Start ()
+	void Start()
 	{
 		ButtonView.controller = controller;
 		controller.Start();
 	}
 	
-	void Update ()
+	void Update()
 	{
+		controller.Update();
 	}
 }

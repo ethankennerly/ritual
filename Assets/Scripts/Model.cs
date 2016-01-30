@@ -3,8 +3,11 @@ using System;  // String, StringSplitOptions
 
 public class Model
 {
-	public int columnCount = 3;
-	public int rowCount = 3;
+	public int columnCountMax = 3;
+	public string invisible = ".";
+	public int rowCountMax = 5;
+	public int tileCountMax = 15;
+	public string[] tileLetters;
 
 	// I wish the API were as simple as JavaScript and Python:
 	// http://stackoverflow.com/questions/1126915/how-do-i-split-a-string-by-a-multi-character-delimiter-in-c
@@ -16,6 +19,8 @@ public class Model
 	 *	line
 	 */
 	public string[][] grids;
+	public string[] grid;
+	public int gridIndex = -1;
 
 	/**
 	 * Each line is a string, which may be accessed by index.
@@ -41,5 +46,39 @@ public class Model
 		{
 			grids = ParseGrids(gridText);
 		}
+		PopulateGrid(0);
+	}
+
+	public void PopulateGrid(int newGridIndex)
+	{
+		gridIndex = newGridIndex;
+		grid = grids[gridIndex];
+		tileLetters = GetTileLetters(grid);
+	}
+
+	/**
+	 * A period denotes an invisible tile.
+	 */
+	public string[] GetTileLetters(string[] grid)
+	{
+		string[] letters = new string[tileCountMax];
+		for (int tileIndex = 0; tileIndex < tileCountMax; tileIndex++)
+		{
+			string character = null;
+			int lineIndex = tileIndex / columnCountMax;
+			bool isVisible = lineIndex < grid.Length;
+			if (isVisible) 
+			{
+				string line = grid[lineIndex];
+				int stringIndex = tileIndex % columnCountMax;
+				isVisible = stringIndex < line.Length;
+				if (isVisible)
+				{
+					character = line[stringIndex].ToString();
+				}
+			}
+			letters[tileIndex] = character;
+		}
+		return letters;
 	}
 }
