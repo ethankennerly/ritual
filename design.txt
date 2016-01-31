@@ -32,16 +32,16 @@ FEATURES
 	Health level theme.
 	Success level theme.
 	Healing level theme.
+	Relaxation level theme.
+	Charm level theme.
 
 TODO
-	Relaxation level theme.
 	Luck level theme.
 	Power level theme.
 	Control level theme.
 	Fame level theme.
 	Intelligence level theme.
 	Focus level theme.
-	Charisma level theme.
 	Peace level theme.
 	Confidence level theme.
 	Birth level theme.
