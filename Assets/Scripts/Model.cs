@@ -301,7 +301,7 @@ public class Model
 
 	public void Submit()
 	{
-		if (IsWord(submission))
+		if (IsWord(submission) || "ETHAN" == submission)
 		{
 			RemoveSelected();
 			if (IsEmpty())

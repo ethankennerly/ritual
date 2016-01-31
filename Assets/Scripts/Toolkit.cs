@@ -20,6 +20,7 @@ public class Toolkit
 	{
 		string text = System.IO.File.ReadAllText(path);
 		text = normalizeLines(text);
+		text = text.Trim();
 		// Debug.Log("Toolkit.Read: " + text);
 		return text;
 	}

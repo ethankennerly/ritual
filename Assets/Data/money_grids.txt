@@ -10,10 +10,6 @@ NOM
 DRI
 .GN
 
-NT.
-EUL
-AFF
-
 OS.
 REP
 PRO
@@ -22,3 +18,7 @@ PRO
 TN.
 .EL
 OPU
+
+NT.
+EUL
+AFF
