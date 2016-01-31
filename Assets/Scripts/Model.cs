@@ -1,5 +1,6 @@
 using UnityEngine;  // Debug.Log
 using System;  // String, StringSplitOptions
+using System.Collections.Generic;  // Dictionary
 
 public class Model
 {
@@ -12,11 +13,11 @@ public class Model
 	public bool[] tileSelecteds;
 	public string submission;
 
-	// I wish the API were as simple as JavaScript and Python:
-	// http://stackoverflow.com/questions/1126915/how-do-i-split-a-string-by-a-multi-character-delimiter-in-c
-	private string[] gridDelimiter = new string[] {"\n\n"};
-	private string[] lineDelimiter = new string[] {"\n"};
+	private string gridDelimiter = "\n\n";
+	private string lineDelimiter = "\n";
 	public string gridText = Toolkit.Read("Assets/Data/grids.txt");
+	public string wordsText = Toolkit.Read("Assets/Data/word_list_moby_crossword.flat.txt");
+	public Dictionary<string, bool> words;
 	/**
 	 * grid:
 	 *	line
@@ -31,12 +32,12 @@ public class Model
 	 */
 	public string[][] ParseGrids(string gridText)
 	{
-		string[] gridStrings = gridText.Split(gridDelimiter, StringSplitOptions.None);
+		string[] gridStrings = Toolkit.Split(gridText, gridDelimiter);
 		string[][] grids = new string[gridStrings.Length][];
 		for (int i = 0; i < gridStrings.Length; i++)
 		{
 			string text = gridStrings[i];
-			string[] lines = text.Split(lineDelimiter, StringSplitOptions.None);
+			string[] lines = Toolkit.Split(text, lineDelimiter);
 			grids[i] = lines;
 			Debug.Log("Model.ParseGrids: " + i 
 				+ ": " + Join(grids[i]));
@@ -46,12 +47,25 @@ public class Model
 
 	public string Join(string[] grid)
 	{
-		return String.Join(lineDelimiter[0], grid);
+		return String.Join(lineDelimiter, grid);
+	}
+
+	public Dictionary<string, bool> ParseWords(string wordsText)
+	{
+		Dictionary<string, bool> words = new Dictionary<string, bool>();
+		string[] wordList = Toolkit.Split(wordsText, lineDelimiter);
+		for (int wordIndex = 0; wordIndex < wordList.Length; wordIndex++)
+		{
+			string word = wordList[wordIndex];
+			words[word] = true;
+		}
+		return words;
 	}
 
 	public void Start()
 	{
 		grids = ParseGrids(gridText);
+		words = ParseWords(wordsText);
 		PopulateGrid(0);
 	}
 
@@ -107,6 +121,14 @@ public class Model
 			submission += tileLetters[tileIndex];
 		}
 		tileSelecteds[tileIndex] = !wasSelected;
+	}
+
+	public void SelectAll(bool isSelected)
+	{
+		for (int tileIndex = 0; tileIndex < tileSelecteds.Length; tileIndex++)
+		{
+			tileSelecteds[tileIndex] = isSelected;
+		}
 	}
 
 	public void RemoveSelected()
@@ -178,14 +200,26 @@ public class Model
 		return 0 == count;
 	}
 
+	private bool IsWord(string submission)
+	{
+		return words.ContainsKey(submission);
+	}
+
 	public void Submit()
 	{
+		if (IsWord(submission))
+		{
+			RemoveSelected();
+			if (IsEmpty())
+			{
+				PopulateGrid(++gridIndex);
+			}
+		}
+		else
+		{
+			SelectAll(false);
+		}
 		Debug.Log("Model.Submit: " + submission);
 		submission = "";
-		RemoveSelected();
-		if (IsEmpty())
-		{
-			PopulateGrid(++gridIndex);
-		}
 	}
 }

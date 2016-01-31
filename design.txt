@@ -7,10 +7,9 @@ FEATURES
 	Mouse up.  Submit word.
 	Hide submitted letter tiles.
 	Remove all letters.  See next grid.
+	Only hide letters if recognized word.
 
 TODO
-	Recognize word in dictionary.
-	Only letters hide if recognized word.
 	Read:  Click and drag to select word "LOVE".
 	
 	See score up:  double points per letter.
