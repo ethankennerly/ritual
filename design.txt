@@ -28,9 +28,9 @@ FEATURES
 	Mark which wish buttons complete.
 	Love level theme.
 	Money level theme.
+	Grief level theme.
 
 TODO
-	Grief level theme.
 	Health level theme.
 	Power level theme.
 	Control level theme.
