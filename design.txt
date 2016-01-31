@@ -2,9 +2,9 @@ FEATURES
 	Press W button.
 	See 3x4 grid of letter buttons.
 	Load letters into grid.
+	Click a letter to outline.
 
 TODO
-	Click a letter to highlight.
 	Drag over adjacent letters.
 	Mouse up.  Submit word.
 	Recognize word in dictionary.

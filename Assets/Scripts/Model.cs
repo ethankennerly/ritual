@@ -5,6 +5,7 @@ public class Model
 {
 	public int columnCountMax = 3;
 	public string invisible = ".";
+	public bool isSelecting;
 	public int rowCountMax = 5;
 	public int tileCountMax = 15;
 	public string[] tileLetters;
@@ -56,6 +57,7 @@ public class Model
 		grid = grids[gridIndex];
 		tileLetters = GetTileLetters(grid);
 		tileSelecteds = new bool[tileCountMax];
+		isSelecting = false;
 	}
 
 	/**
@@ -88,5 +90,62 @@ public class Model
 	{
 		int tileIndex = int.Parse(tileName.Split('_')[1]);
 		tileSelecteds[tileIndex] = !tileSelecteds[tileIndex];
+	}
+
+	public void SelectAll(bool isSelected)
+	{
+		for (int tileIndex = 0; tileIndex < tileSelecteds.Length; tileIndex++)
+		{
+			tileSelecteds[tileIndex] = false;
+		}
+	}
+
+	public void OnMouseDown(string tileName)
+	{
+		if (!isSelecting)
+		{
+			isSelecting = true;
+		}
+		Select(tileName);
+	}
+
+	private string overPreviously;
+
+	public void OnMouseOver(string tileName)
+	{
+		if (isSelecting)
+		{
+			if (null != tileName 
+			&& overPreviously != tileName 
+			&& 0 == tileName.IndexOf("tile_"))
+			{
+				Select(tileName);
+			}
+		}
+		overPreviously = tileName;
+	}
+
+	public void OnMouseEnter(string tileName)
+	{
+		if (isSelecting)
+		{
+			Select(tileName);
+		}
+	}
+
+	public void OnMouseExit(string tileName)
+	{
+		if (isSelecting)
+		{
+		}
+	}
+
+	public void OnMouseUp()
+	{
+		if (isSelecting)
+		{
+			isSelecting = false;
+			//- SelectAll(false);
+		}
 	}
 }

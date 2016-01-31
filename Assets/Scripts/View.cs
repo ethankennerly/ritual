@@ -36,7 +36,7 @@ public class View
 			if (1 <= tileIndex)
 			{
 				tile = InstantiatePrefab(tilePrefab, tilePrefab.transform.position);
-				tile.transform.parent = tilePrefab.transform.parent.transform;
+				tile.transform.SetParent(tilePrefab.transform.parent.transform, false);
 			}
 			tile.name = "tile_" + tileIndex;
 			tiles[tileIndex] = tile;
@@ -79,5 +79,10 @@ public class View
 			GameObject selected = selecteds[tileIndex];
 			selected.SetActive(isSelected);
 		}
+	}
+
+	public bool IsMouseUpNow()
+	{
+		return Input.GetMouseButtonUp(0);
 	}
 }

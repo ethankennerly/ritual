@@ -14,12 +14,28 @@ public class Controller
 
 	public void OnMouseDown(string name)
 	{
-		Debug.Log("Controller.OnMouseDown: " + name);
-		model.Select(name);
+		// Debug.Log("Controller.OnMouseDown: " + name);
+		model.OnMouseDown(name);
+	}
+
+	public void OnMouseEnter(string name)
+	{
+		Debug.Log("Controller.OnMouseEnter: " + name);
+		model.OnMouseEnter(name);
+	}
+
+	public void OnMouseExit(string name)
+	{
+		// Debug.Log("Controller.OnMouseExit: " + name);
+		model.OnMouseExit(name);
 	}
 
 	public void Update()
 	{
+		if (view.IsMouseUpNow())
+		{
+			model.OnMouseUp();
+		}
 		view.UpdateLetters(model.tileLetters, model.invisible);
 		view.UpdateSelecteds(model.tileSelecteds);
 	}
