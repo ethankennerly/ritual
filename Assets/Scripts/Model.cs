@@ -38,24 +38,29 @@ public class Model
 			string text = gridStrings[i];
 			string[] lines = text.Split(lineDelimiter, StringSplitOptions.None);
 			grids[i] = lines;
-			Debug.Log("Model.ParseGrids: " + String.Join(lineDelimiter[0], grids[i]));
+			Debug.Log("Model.ParseGrids: " + i 
+				+ ": " + Join(grids[i]));
 		}
 		return grids;
 	}
 
+	public string Join(string[] grid)
+	{
+		return String.Join(lineDelimiter[0], grid);
+	}
+
 	public void Start()
 	{
-		if (null == grids)
-		{
-			grids = ParseGrids(gridText);
-		}
+		grids = ParseGrids(gridText);
 		PopulateGrid(0);
 	}
 
 	public void PopulateGrid(int newGridIndex)
 	{
-		gridIndex = newGridIndex;
+		gridIndex = newGridIndex % grids.Length;
 		grid = grids[gridIndex];
+		Debug.Log("Model.PopulateGrid: index " + gridIndex 
+			+ ": " + Join(grid));
 		tileLetters = GetTileLetters(grid);
 		tileSelecteds = new bool[tileCountMax];
 		isSelecting = false;
@@ -159,10 +164,28 @@ public class Model
 		}
 	}
 
+	private bool IsEmpty()
+	{
+		int count = 0;
+		for (int tileIndex = 0; tileIndex < tileCountMax; tileIndex++)
+		{
+			string letter = tileLetters[tileIndex];
+			if (null != letter && invisible != letter)
+			{
+				count++;
+			}
+		}
+		return 0 == count;
+	}
+
 	public void Submit()
 	{
 		Debug.Log("Model.Submit: " + submission);
 		submission = "";
 		RemoveSelected();
+		if (IsEmpty())
+		{
+			PopulateGrid(++gridIndex);
+		}
 	}
 }
