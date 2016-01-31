@@ -29,9 +29,11 @@ FEATURES
 	Love level theme.
 	Money level theme.
 	Grief level theme.
+	Health level theme.
 
 TODO
-	Health level theme.
+	Success level theme.
+	Luck level theme.
 	Power level theme.
 	Control level theme.
 	Fame level theme.
@@ -40,7 +42,6 @@ TODO
 	Charisma level theme.
 	Peace level theme.
 	Healing level theme.
-	Success level theme.
 	Confidence level theme.
 	Birth level theme.
 	Death level theme.

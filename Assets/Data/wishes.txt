@@ -3,5 +3,7 @@ Tutorial,tutorial_grids.txt,tutorial_messages.txt
 Love,love_grids.txt,
 Health,health_grids.txt,
 Money,money_grids.txt,
+Success,success_grids.txt,
 Grief,grief_grids.txt,
+Healing,healing_grids.txt,
 Credits,credits_grids.txt,
