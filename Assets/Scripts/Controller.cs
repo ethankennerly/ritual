@@ -43,6 +43,7 @@ public class Controller
 				model.wishIsCompletes[model.wishName], model.wishesIsCompletes);
 			ViewUtil.SetState(view.scene, stateChange);
 			ViewUtil.SetText(view.wishText, model.wishName);
+			ViewUtil.SetText(view.gridsCompleteText, model.gridsCompleteText);
 		}
 		ViewUtil.SetText(view.levelText, model.levelText);
 		view.UpdateLetters(model.tileLetters, model.invisible);

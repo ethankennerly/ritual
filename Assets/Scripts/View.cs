@@ -6,6 +6,7 @@ public class View
 {
 	public Text levelText;
 	public Text wishText;
+	public Text gridsCompleteText;
 	public Text message;
 	public GameObject scene;
 	public delegate GameObject InstantiatePrefabDelegate(GameObject prefab, 
@@ -33,6 +34,7 @@ public class View
 			message = GameObject.Find("Message").GetComponent<Text>();
 			levelText = GameObject.Find("LevelText").GetComponent<Text>();
 			wishText = GameObject.Find("WishText").GetComponent<Text>();
+			gridsCompleteText = GameObject.Find("GridsCompleteText").GetComponent<Text>();
 			scene = GameObject.Find("Scene");
 			grid = GameObject.Find("Grid");
 			levelGrid = GameObject.Find("LevelGrid");

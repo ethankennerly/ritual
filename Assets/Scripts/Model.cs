@@ -19,6 +19,9 @@ public class Model
 	public string[] levelButtonTexts;
 	public string[] wishButtonNames;
 	public string[] wishButtonTexts;
+	public int gridsComplete;
+	public int gridsTotal;
+	public string gridsCompleteText;
 
 	public string stateChange = null;
 	private string stateNext = null;
@@ -100,11 +103,9 @@ public class Model
 		}
 	}
 
-	int gridTotal;
-
 	public string[] LoadAllWishes()
 	{
-		gridTotal = 0;
+		gridsTotal = 0;
 		string[][] wishTable = Toolkit.ParseCsv(wishesText);
 		int nameColumn = 0;
 		int gridsColumn = 1;
@@ -129,7 +130,7 @@ public class Model
 			string[][] grids = ParseGrids(gridsText);
 			wishGrids[name] = grids;
 			wishIsCompletes[name] = new bool[grids.Length];
-			gridTotal += grids.Length;
+			gridsTotal += grids.Length;
 			for (int gridIndex = 0; gridIndex < grids.Length; gridIndex++)
 			{
 				wishIsCompletes[name][gridIndex] = false;
@@ -147,8 +148,19 @@ public class Model
 			}
 			wishMessages[name] = messages;
 		}
-		Debug.Log("Model.LoadAllWishes: " + gridTotal + " grids");
+		Debug.Log("Model.LoadAllWishes: " + gridsTotal + " grids");
+		gridsComplete = 0;
+		formatGridsComplete();
+
 		return wishNames;
+	}
+
+	private void formatGridsComplete()
+	{
+		gridsCompleteText = "Spells cast: " 
+			+ gridsComplete
+			+ " of "
+			+ gridsTotal;
 	}
 
 	public void SetupWish(int index)
@@ -334,7 +346,11 @@ public class Model
 	public bool SetComplete(int gridIndex)
 	{
 		bool[] isCompletes = wishIsCompletes[wishName];
-		isCompletes[gridIndex] = true;
+		if (!isCompletes[gridIndex]) {
+			gridsComplete++;
+			formatGridsComplete();
+			isCompletes[gridIndex] = true;
+		}
 		bool isAllComplete = true;
 		for (int tileIndex = 0; tileIndex < isCompletes.Length; tileIndex++)
 		{
