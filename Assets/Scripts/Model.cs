@@ -7,6 +7,7 @@ public class Model
 	public int columnCountMax = 3;
 	public string invisible = ".";
 	public bool isSelecting;
+	public string message;
 	public int rowCountMax = 5;
 	public int tileCountMax = 15;
 	public string[] tileLetters;
@@ -15,14 +16,16 @@ public class Model
 
 	private string gridDelimiter = "\n\n";
 	private string lineDelimiter = "\n";
-	public string gridText = Toolkit.Read("Assets/Data/grids.txt");
-	public string wordsText = Toolkit.Read("Assets/Data/word_list_moby_crossword.flat.txt");
-	public Dictionary<string, bool> words;
+	private string gridsText = Toolkit.Read("Assets/Data/grids.txt");
+	private string wordsText = Toolkit.Read("Assets/Data/word_list_moby_crossword.flat.txt");
+	private string messagesText = Toolkit.Read("Assets/Data/messages.txt");
+	private string[] messages;
+	private Dictionary<string, bool> words;
 	/**
 	 * grid:
 	 *	line
 	 */
-	public string[][] grids;
+	private string[][] grids;
 	public string[] grid;
 	public int gridIndex = -1;
 
@@ -30,9 +33,9 @@ public class Model
 	 * Each line is a string, which may be accessed by index.
 	 * Allows jagged arrays.
 	 */
-	public string[][] ParseGrids(string gridText)
+	public string[][] ParseGrids(string gridsText)
 	{
-		string[] gridStrings = Toolkit.Split(gridText, gridDelimiter);
+		string[] gridStrings = Toolkit.Split(gridsText, gridDelimiter);
 		string[][] grids = new string[gridStrings.Length][];
 		for (int i = 0; i < gridStrings.Length; i++)
 		{
@@ -64,8 +67,9 @@ public class Model
 
 	public void Start()
 	{
-		grids = ParseGrids(gridText);
+		grids = ParseGrids(gridsText);
 		words = ParseWords(wordsText);
+		messages = Toolkit.Split(messagesText, lineDelimiter);
 		PopulateGrid(0);
 	}
 
@@ -79,6 +83,14 @@ public class Model
 		tileSelecteds = new bool[tileCountMax];
 		isSelecting = false;
 		submission = "";
+		if (gridIndex < messages.Length)
+		{
+			message = messages[gridIndex];
+		}
+		else
+		{
+			message = "";
+		}
 	}
 
 	/**
@@ -151,22 +163,6 @@ public class Model
 			isSelecting = true;
 		}
 		Select(tileName);
-	}
-
-	private string overPreviously;
-
-	public void OnMouseOver(string tileName)
-	{
-		if (isSelecting)
-		{
-			if (null != tileName 
-			&& overPreviously != tileName 
-			&& 0 == tileName.IndexOf("tile_"))
-			{
-				Select(tileName);
-			}
-		}
-		overPreviously = tileName;
 	}
 
 	public void OnMouseEnter(string tileName)

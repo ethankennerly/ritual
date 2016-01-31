@@ -32,5 +32,6 @@ public class Controller
 		}
 		view.UpdateLetters(model.tileLetters, model.invisible);
 		view.UpdateSelecteds(model.tileSelecteds);
+		ViewUtil.SetText(view.message, model.message);
 	}
 }

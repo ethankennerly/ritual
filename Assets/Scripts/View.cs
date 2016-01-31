@@ -4,6 +4,7 @@ using System;
 
 public class View
 {
+	public Text message;
 	private GameObject main;
 	private GameObject grid;
 	private GameObject[] tiles;
@@ -18,6 +19,7 @@ public class View
 	{
 		if (null == main) {
 			main = GameObject.Find("Main");
+			message = GameObject.Find("Message").GetComponent<Text>();
 			grid = GameObject.Find("Grid");
 		}
 	}
