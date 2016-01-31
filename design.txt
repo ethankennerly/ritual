@@ -17,13 +17,14 @@ FEATURES
 	After last level, go back to wishes.
 	Choose next spell from words.
 	Special word for credits 'ETHAN'
+	Small letter button.  Larg select.
+		Test case:  Jennifer Russ expects to realize which letter is selected.
 
 TODO
-	Smaller button.  Larger select.
-		Test case:  Jennifer Russ expects to realize which letter is selected.
 	Restart button.
 		Test case:  Jennifer Russ expects to restart.
-	Text of which level being tried.
+	Text of which level and theme being tried.
+		Test case:  Jennifer Russ expects to see.
 	Mark which ones complete.
 	Hint:  Highlight first letter of a word that could clear board.
 		Hint again:  show another first letter.

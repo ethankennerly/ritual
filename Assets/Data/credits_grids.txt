@@ -9,10 +9,10 @@ YT.
 .A.
 .N.
 
-HGN
-OAE
-SMS
-TET
+AGN
+TAE
+.MS
+.ET
 
 GLO
 LAB
@@ -25,3 +25,13 @@ YTN
 SIX
 EET
 .N.
+
+PLA
+ETY
+STE
+.SR
+
+JEN
+FIN
+ERR
+SSU

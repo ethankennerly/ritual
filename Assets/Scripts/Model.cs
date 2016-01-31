@@ -21,7 +21,9 @@ public class Model
 	private string gridDelimiter = "\n\n";
 	private string wishesText = Toolkit.Read("Assets/Data/wishes.txt");
 	private string wordsText = Toolkit.Read("Assets/Data/word_list_moby_crossword.flat.txt");
+	private string creditsText = Toolkit.Read("Assets/Data/word_credits.txt");
 	private string[] messages;
+	private Dictionary<string, bool> credits;
 	private Dictionary<string, bool> words;
 	/**
 	 * grid:
@@ -142,6 +144,7 @@ public class Model
 	public void Start()
 	{
 		words = ParseWords(wordsText);
+		credits = ParseWords(creditsText);
 		wishButtonTexts = LoadAllWishes();
 		SetupWishButtons(wishButtonTexts);
 		SetupLevelButtons(levelCountMax);
@@ -296,12 +299,14 @@ public class Model
 
 	private bool IsWord(string submission)
 	{
-		return words.ContainsKey(submission);
+		return words.ContainsKey(submission)
+			|| credits.ContainsKey(submission);
 	}
 
+	
 	public void Submit()
 	{
-		if (IsWord(submission) || "ETHAN" == submission)
+		if (IsWord(submission))
 		{
 			RemoveSelected();
 			if (IsEmpty())
