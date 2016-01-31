@@ -5,6 +5,10 @@ public class Controller
 	public Model model = new Model();
 	public View view = new View();
 
+	/**
+	 * Message behind buttons.
+	 * Test case:  2016-01-30 Expect to select 12th tile.  Would not select.
+	 */
 	public void Start()
 	{
 		model.Start();

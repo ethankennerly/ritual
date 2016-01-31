@@ -66,7 +66,7 @@ public class View
 			if (isActive)
 			{
 				bool isVisible = isActive && letter != invisible;
-				letters[tileIndex].text = letter;
+				ViewUtil.SetText(letters[tileIndex], letter);
 				GameObject button = buttons[tileIndex];
 				button.SetActive(isVisible);
 			}

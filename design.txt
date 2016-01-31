@@ -14,7 +14,6 @@ TODO
 	Level buttons in grid.
 	Click button to go back to levels.
 	See score up:  double points per letter.
-	Clear all words.  Unlock next level.
 	Hint:  Highlight first letter of a word that could clear board.
 		Hint again:  show another first letter.
 	See an animation.
