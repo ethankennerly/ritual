@@ -2,4 +2,5 @@ name,grids,messages
 Tutorial,tutorial_grids.txt,tutorial_messages.txt
 Love,love_grids.txt,
 Money,money_grids.txt,
+Grief,grief_grids.txt,
 Credits,credits_grids.txt,

@@ -26,27 +26,14 @@ FEATURES
 	Mark which level buttons complete.
 		Test case:  Jennifer Russ expects to see which level was completed.
 	Mark which wish buttons complete.
+	Love level theme.
+	Money level theme.
 
 TODO
-	Hint:  Highlight first letter of a word that could clear board.
-		Hint again:  show another first letter.
-	Hear a sound.
-	Blocks reveal an image.
-	Surrounding blocks destroyed.
-	See score up:  double points per letter.
-	See an animation.
-	Darken as increase in level.
-	Experiment with swap two letters to connect words.
-		End level after fixed number of moves.
-		Fill in other letters.
-	Read theme.
-	Love level theme.
-	Select a level theme.
-	If cannot complete with any letters left, go back to levels.
-	Money level theme.
+	Grief level theme.
+	Health level theme.
 	Power level theme.
 	Control level theme.
-	Health level theme.
 	Fame level theme.
 	Intelligence level theme.
 	Focus level theme.
@@ -55,6 +42,22 @@ TODO
 	Healing level theme.
 	Success level theme.
 	Confidence level theme.
+	Birth level theme.
+	Death level theme.
+	Shuffle adjacent letter placement.
+	Hint:  Highlight first letter of a word that could clear board.
+		Hint again:  show another first letter.
+	Hear a sound.
+	Blocks reveal a related quote.  Click to continue.
+	Blocks reveal an a letter that replaces button text.
+	Surrounding blocks destroyed.
+	See score up:  double points per letter.
+	See an animation.
+	Darken as increase in level.
+	Experiment with swap two letters to connect words.
+		End level after fixed number of moves.
+		Fill in other letters.
+	If cannot complete with any letters left, go back to levels.
 	Colorize and stylize by theme.
 
 REFERENCE GAMES
