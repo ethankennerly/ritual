@@ -100,8 +100,11 @@ public class Model
 		}
 	}
 
+	int gridTotal;
+
 	public string[] LoadAllWishes()
 	{
+		gridTotal = 0;
 		string[][] wishTable = Toolkit.ParseCsv(wishesText);
 		int nameColumn = 0;
 		int gridsColumn = 1;
@@ -126,6 +129,7 @@ public class Model
 			string[][] grids = ParseGrids(gridsText);
 			wishGrids[name] = grids;
 			wishIsCompletes[name] = new bool[grids.Length];
+			gridTotal += grids.Length;
 			for (int gridIndex = 0; gridIndex < grids.Length; gridIndex++)
 			{
 				wishIsCompletes[name][gridIndex] = false;
@@ -143,6 +147,7 @@ public class Model
 			}
 			wishMessages[name] = messages;
 		}
+		Debug.Log("Model.LoadAllWishes: " + gridTotal + " grids");
 		return wishNames;
 	}
 

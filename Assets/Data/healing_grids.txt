@@ -2,14 +2,14 @@
 GNL
 HEA
 
+EER
+ASU
+.EC
+
 SEL
 SPL
 ENE
 ..H
-
-EER
-ASU
-.EC
 
 AGE
 SA.

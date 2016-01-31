@@ -46,6 +46,7 @@ TODO
 	Confidence level theme.
 	Birth level theme.
 	Death level theme.
+	Read how many levels completed in wish.
 	Shuffle adjacent letter placement.
 	Hint:  Highlight first letter of a word that could clear board.
 		Hint again:  show another first letter.
