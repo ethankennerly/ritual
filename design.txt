@@ -3,14 +3,15 @@ FEATURES
 	See 3x4 grid of letter buttons.
 	Load letters into grid.
 	Click a letter to outline.
-
-TODO
 	Drag over adjacent letters.
 	Mouse up.  Submit word.
+	Hide submitted letter tiles.
+
+TODO
 	Recognize word in dictionary.
-	Remove those letters.
+	Only letters hide if recognized word.
 	Read to select letters.
-	See score up:  1 point per letter.
+	See score up:  double points per letter.
 	Clear all words.  Unlock next level.
 	Hint:  Highlight first letter of a word that could clear board.
 		Hint again:  show another first letter.

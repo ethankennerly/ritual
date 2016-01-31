@@ -104,11 +104,16 @@ public class Model
 		tileSelecteds[tileIndex] = !wasSelected;
 	}
 
-	public void SelectAll(bool isSelected)
+	public void RemoveSelected()
 	{
 		for (int tileIndex = 0; tileIndex < tileSelecteds.Length; tileIndex++)
 		{
-			tileSelecteds[tileIndex] = false;
+			bool isSelected = tileSelecteds[tileIndex];
+			if (isSelected)
+			{
+				tileSelecteds[tileIndex] = false;
+				tileLetters[tileIndex] = invisible;
+			}
 		}
 	}
 
@@ -145,13 +150,6 @@ public class Model
 		}
 	}
 
-	public void OnMouseExit(string tileName)
-	{
-		if (isSelecting)
-		{
-		}
-	}
-
 	public void OnMouseUp()
 	{
 		if (isSelecting)
@@ -165,6 +163,6 @@ public class Model
 	{
 		Debug.Log("Model.Submit: " + submission);
 		submission = "";
-		SelectAll(false);
+		RemoveSelected();
 	}
 }

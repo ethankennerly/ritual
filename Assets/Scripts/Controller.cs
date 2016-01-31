@@ -20,14 +20,8 @@ public class Controller
 
 	public void OnMouseEnter(string name)
 	{
-		Debug.Log("Controller.OnMouseEnter: " + name);
+		// Debug.Log("Controller.OnMouseEnter: " + name);
 		model.OnMouseEnter(name);
-	}
-
-	public void OnMouseExit(string name)
-	{
-		// Debug.Log("Controller.OnMouseExit: " + name);
-		model.OnMouseExit(name);
 	}
 
 	public void Update()
