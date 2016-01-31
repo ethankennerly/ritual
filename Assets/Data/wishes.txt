@@ -1,6 +1,7 @@
 name,grids,messages
 Tutorial,tutorial_grids.txt,tutorial_messages.txt
 Love,love_grids.txt,
+Relaxation,relaxation_grids.txt,
 Health,health_grids.txt,
 Money,money_grids.txt,
 Success,success_grids.txt,
