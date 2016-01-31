@@ -1,9 +1,14 @@
 using UnityEngine;  // Debug.Log
 using System;  // String, StringSplitOptions
-// using System.IO;  // ReadAllText
 
 public class Toolkit
 {
+	public static int parseIndex(string tileName)
+	{
+		int tileIndex = int.Parse(tileName.Split('_')[1]);
+		return tileIndex;
+	}
+
 	public static string normalizeLines(string text)
 	{
 		return text.Replace("\r\n", "\n");

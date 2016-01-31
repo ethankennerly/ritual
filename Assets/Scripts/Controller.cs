@@ -21,7 +21,11 @@ public class Controller
 	public void OnMouseDown(string name)
 	{
 		// Debug.Log("Controller.OnMouseDown: " + name);
-		model.OnMouseDown(name);
+		string state = model.OnMouseDown(name);
+		if (null != state)
+		{
+			ViewUtil.SetState(view.scene, state);
+		}
 	}
 
 	public void OnMouseEnter(string name)

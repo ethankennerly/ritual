@@ -124,8 +124,7 @@ public class Model
 
 	public void Select(string tileName)
 	{
-		int tileIndex = int.Parse(tileName.Split('_')[1]);
-
+		int tileIndex = Toolkit.parseIndex(tileName);
 		bool wasSelected = tileSelecteds[tileIndex];
 		if (wasSelected)
 		{
@@ -159,13 +158,28 @@ public class Model
 		}
 	}
 
-	public void OnMouseDown(string tileName)
+	public string OnMouseDown(string tileName)
 	{
-		if (!isSelecting)
+		string state = null;
+		if (0 == tileName.IndexOf("level_"))
 		{
-			isSelecting = true;
+			state = "levelEnter";
+			gridIndex = Toolkit.parseIndex(tileName);
+			PopulateGrid(gridIndex);
 		}
-		Select(tileName);
+		else if ("LevelExit" == tileName)
+		{
+			state = "levelExit";
+		}
+		else
+		{
+			if (!isSelecting)
+			{
+				isSelecting = true;
+			}
+			Select(tileName);
+		}
+		return state;
 	}
 
 	public void OnMouseEnter(string tileName)

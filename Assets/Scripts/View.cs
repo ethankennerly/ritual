@@ -5,6 +5,7 @@ using System;
 public class View
 {
 	public Text message;
+	public GameObject scene;
 	public delegate GameObject InstantiatePrefabDelegate(GameObject prefab, 
 		Vector3 position);
 	public InstantiatePrefabDelegate InstantiatePrefab;
@@ -24,6 +25,7 @@ public class View
 		if (null == main) {
 			main = GameObject.Find("Main");
 			message = GameObject.Find("Message").GetComponent<Text>();
+			scene = GameObject.Find("Scene");
 			grid = GameObject.Find("Grid");
 			levelGrid = GameObject.Find("LevelGrid");
 		}
