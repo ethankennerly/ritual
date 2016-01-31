@@ -14,6 +14,8 @@ public class Controller
 		model.Start();
 		view.Start();
 		view.SetupTiles(model.tileCountMax);
+		view.SetupLevels(model.levelCountMax);
+		view.UpdateLevels(model.levelCount);
 	}
 
 	public void OnMouseDown(string name)

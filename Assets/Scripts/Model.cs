@@ -9,6 +9,8 @@ public class Model
 	public bool isSelecting;
 	public string message;
 	public int rowCountMax = 5;
+	public int levelCountMax = 21;
+	public int levelCount;
 	public int tileCountMax = 15;
 	public string[] tileLetters;
 	public bool[] tileSelecteds;
@@ -71,6 +73,7 @@ public class Model
 		words = ParseWords(wordsText);
 		messages = Toolkit.Split(messagesText, lineDelimiter);
 		PopulateGrid(0);
+		levelCount = grids.Length;
 	}
 
 	public void PopulateGrid(int newGridIndex)
