@@ -18,6 +18,7 @@ public class View
 	private Text[] letters;
 	private GameObject[] buttons;
 	private GameObject[] selecteds;
+	private GameObject[] levelCompleteds;
 
 	private GameObject levelGrid;
 	private GameObject wishGrid;
@@ -89,19 +90,29 @@ public class View
 		return tiles;
 	}
 
-	public void UpdateLevels(int levelCount)
+	public void UpdateLevels(int levelCount, bool[] isCompletes)
 	{
 		for (int tileIndex = 0; tileIndex < levels.Length; tileIndex++)
 		{
 			bool isActive = tileIndex < levelCount;
 			GameObject tile = levels[tileIndex];
 			tile.SetActive(isActive);
+			if (isActive)
+			{
+				levelCompleteds[tileIndex].SetActive(isCompletes[tileIndex]);
+			}
 		}
 	}
 
 	public void SetupLevels(int levelCountMax, string[] levelNames, string[] levelTexts)
 	{
 		levels = GenerateTiles(levelGrid, levelCountMax, levelNames, levelTexts);
+		levelCompleteds = new GameObject[levelCountMax];
+		for (int tileIndex = 0; tileIndex < levelCountMax; tileIndex++)
+		{
+			GameObject tile = levels[tileIndex];
+			levelCompleteds[tileIndex] = tile.transform.Find("Completed").gameObject;
+		}
 	}
 
 	public void SetupWishes(string[] wishNames, string[] wishTexts)

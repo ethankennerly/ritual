@@ -15,10 +15,18 @@ public class Model
 	public string[] tileLetters;
 	public bool[] tileSelecteds;
 	public string submission;
+	public string[] levelButtonNames;
+	public string[] levelButtonTexts;
+	public string[] wishButtonNames;
+	public string[] wishButtonTexts;
+
 	public string stateChange = null;
 	private string stateNext = null;
 
 	private string gridDelimiter = "\n\n";
+	private Dictionary <string, string[][]> wishGrids;
+	private Dictionary <string, string[]> wishMessages;
+	public Dictionary <string, bool[]> wishIsCompletes;
 	private string wishesText = Toolkit.Read("Assets/Data/wishes.txt");
 	private string wordsText = Toolkit.Read("Assets/Data/word_list_moby_crossword.flat.txt");
 	private string creditsText = Toolkit.Read("Assets/Data/word_credits.txt");
@@ -70,11 +78,6 @@ public class Model
 		return words;
 	}
 
-	public string[] levelButtonNames;
-	public string[] levelButtonTexts;
-	public string[] wishButtonNames;
-	public string[] wishButtonTexts;
-
 	private void SetupLevelButtons(int levelCountMax)
 	{
 		levelButtonNames = new string[levelCountMax];
@@ -95,9 +98,6 @@ public class Model
 		}
 	}
 
-	private Dictionary <string, string[][]> wishGrids;
-	private Dictionary <string, string[]> wishMessages;
-
 	public string[] LoadAllWishes()
 	{
 		string[][] wishTable = Toolkit.ParseCsv(wishesText);
@@ -107,6 +107,7 @@ public class Model
 		string path = "Assets/Data/";
 		wishGrids = new Dictionary<string, string[][]>();
 		wishMessages = new Dictionary<string, string[]>();
+		wishIsCompletes = new Dictionary<string, bool[]>();
 		int afterHeaderRow = 1;
 		string[] wishNames = new string[wishTable.Length - afterHeaderRow];
 		for (int wishIndex = afterHeaderRow; wishIndex < wishTable.Length; wishIndex++)
@@ -120,6 +121,7 @@ public class Model
 			string gridsText = Toolkit.Read(path + gridsFileName);
 			string[][] grids = ParseGrids(gridsText);
 			wishGrids[name] = grids;
+			wishIsCompletes[name] = new bool[grids.Length];
 			string[] messages;
 			if (null == messagesFileName || "" == messagesFileName)
 			{
@@ -322,6 +324,7 @@ public class Model
 			RemoveSelected();
 			if (IsEmpty())
 			{
+				wishIsCompletes[wishName][gridIndex] = true;
 				++gridIndex;
 				if (gridIndex < levelCount)
 				{

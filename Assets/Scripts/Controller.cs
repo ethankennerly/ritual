@@ -15,7 +15,6 @@ public class Controller
 		view.Start();
 		view.SetupTiles(model.tileCountMax);
 		view.SetupLevels(model.levelCountMax, model.levelButtonNames, model.levelButtonTexts);
-		view.UpdateLevels(model.levelCount);
 		view.SetupWishes(model.wishButtonNames, model.wishButtonTexts);
 	}
 
@@ -40,7 +39,8 @@ public class Controller
 		string stateChange = model.Update();
 		if (null != stateChange)
 		{
-			view.UpdateLevels(model.levelCount);
+			view.UpdateLevels(model.levelCount,
+				model.wishIsCompletes[model.wishName]);
 			ViewUtil.SetState(view.scene, stateChange);
 			ViewUtil.SetText(view.wishText, model.wishName);
 		}
