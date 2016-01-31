@@ -18,7 +18,9 @@ public class View
 	private GameObject[] selecteds;
 
 	private GameObject levelGrid;
+	private GameObject wishGrid;
 	private GameObject[] levels;
+	private GameObject[] wishes;
 
 	public void Start()
 	{
@@ -28,6 +30,7 @@ public class View
 			scene = GameObject.Find("Scene");
 			grid = GameObject.Find("Grid");
 			levelGrid = GameObject.Find("LevelGrid");
+			wishGrid = GameObject.Find("WishGrid");
 		}
 	}
 
@@ -59,27 +62,28 @@ public class View
 		}
 	}
 
-	public void SetupLevels(int levelCountMax)
+	private GameObject[] GenerateTiles(GameObject grid, int tileCountMax, string[] tileNames, string[] tileTexts)
 	{
-		levels = new GameObject[levelCountMax];
-		string address = "LevelTile";
-		Transform transform = levelGrid.transform.Find(address);
+		GameObject[] tiles = new GameObject[tileCountMax];
+		string address = "Tile";
+		Transform transform = grid.transform.Find(address);
 		GameObject tilePrefab = transform.gameObject;
 		GameObject tile = tilePrefab;
-		for (int tileIndex = 0; tileIndex < levelCountMax; tileIndex++)
+		for (int tileIndex = 0; tileIndex < tileCountMax; tileIndex++)
 		{
 			if (1 <= tileIndex)
 			{
 				tile = InstantiatePrefab(tilePrefab, tilePrefab.transform.position);
 				tile.transform.SetParent(tilePrefab.transform.parent.transform, false);
 			}
-			tile.name = "level_" + tileIndex;
-			levels[tileIndex] = tile;
-			GameObject button = tile.transform.Find("LevelButton").gameObject;
+			tile.name = tileNames[tileIndex];
+			tiles[tileIndex] = tile;
+			GameObject button = tile.transform.Find("Button").gameObject;
 			GameObject textObject = button.transform.Find("Text").gameObject;
 			Text txt = textObject.GetComponent<Text>();
-			ViewUtil.SetText(txt, (tileIndex + 1).ToString());
+			ViewUtil.SetText(txt, tileTexts[tileIndex]);
 		}
+		return tiles;
 	}
 
 	public void UpdateLevels(int levelCount)
@@ -90,6 +94,16 @@ public class View
 			GameObject tile = levels[tileIndex];
 			tile.SetActive(isActive);
 		}
+	}
+
+	public void SetupLevels(int levelCountMax, string[] levelNames, string[] levelTexts)
+	{
+		levels = GenerateTiles(levelGrid, levelCountMax, levelNames, levelTexts);
+	}
+
+	public void SetupWishes(string[] wishNames, string[] wishTexts)
+	{
+		wishes = GenerateTiles(wishGrid, wishNames.Length, wishNames, wishTexts);
 	}
 
 	/**

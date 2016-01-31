@@ -44,8 +44,7 @@ public class Model
 			string text = gridStrings[i];
 			string[] lines = Toolkit.Split(text, Toolkit.lineDelimiter);
 			grids[i] = lines;
-			Debug.Log("Model.ParseGrids: " + i 
-				+ ": " + Join(grids[i]));
+			// Debug.Log("Model.ParseGrids: " + i + ": " + Join(grids[i]));
 		}
 		return grids;
 	}
@@ -67,10 +66,35 @@ public class Model
 		return words;
 	}
 
+	public string[] levelButtonNames;
+	public string[] levelButtonTexts;
+	public string[] wishButtonNames;
+	public string[] wishButtonTexts;
+
+	private void SetupLevelButtons(int levelCountMax)
+	{
+		levelButtonNames = new string[levelCountMax];
+		levelButtonTexts = new string[levelCountMax];
+		for (int tileIndex = 0; tileIndex < levelCountMax; tileIndex++)
+		{
+			levelButtonNames[tileIndex] = "level_" + tileIndex;
+			levelButtonTexts[tileIndex] = (tileIndex + 1).ToString();
+		}
+	}
+
+	private void SetupWishButtons(string[] wishButtonTexts)
+	{
+		wishButtonNames = new string[wishButtonTexts.Length];
+		for (int tileIndex = 0; tileIndex < wishButtonTexts.Length; tileIndex++)
+		{
+			wishButtonNames[tileIndex] = "wish_" + tileIndex;
+		}
+	}
+
 	private Dictionary <string, string[][]> wishGrids;
 	private Dictionary <string, string[]> wishMessages;
 
-	public void LoadAllWishes()
+	public string[] LoadAllWishes()
 	{
 		string[][] wishTable = Toolkit.ParseCsv(wishesText);
 		int nameColumn = 0;
@@ -80,11 +104,13 @@ public class Model
 		wishGrids = new Dictionary<string, string[][]>();
 		wishMessages = new Dictionary<string, string[]>();
 		int afterHeaderRow = 1;
+		string[] wishNames = new string[wishTable.Length - afterHeaderRow];
 		for (int wishIndex = afterHeaderRow; wishIndex < wishTable.Length; wishIndex++)
 		{
 			string[] wishRow = wishTable[wishIndex];
 			string name = wishRow[nameColumn];
-			Debug.Log("Model.LoadAllWishes: <" + name + ">");
+			wishNames[wishIndex - 1] = name;
+			// Debug.Log("Model.LoadAllWishes: <" + name + ">");
 			string gridsFileName = wishRow[gridsColumn];
 			string messagesFileName = wishRow[messagesColumn];
 			string gridsText = Toolkit.Read(path + gridsFileName);
@@ -102,6 +128,7 @@ public class Model
 			}
 			wishMessages[name] = messages;
 		}
+		return wishNames;
 	}
 
 	public void SetupWish(string wishName)
@@ -115,7 +142,9 @@ public class Model
 	public void Start()
 	{
 		words = ParseWords(wordsText);
-		LoadAllWishes();
+		wishButtonTexts = LoadAllWishes();
+		SetupWishButtons(wishButtonTexts);
+		SetupLevelButtons(levelCountMax);
 		SetupWish("Tutorial");
 	}
 
@@ -123,8 +152,7 @@ public class Model
 	{
 		gridIndex = newGridIndex % grids.Length;
 		grid = grids[gridIndex];
-		Debug.Log("Model.PopulateGrid: index " + gridIndex 
-			+ ": " + Join(grid));
+		// Debug.Log("Model.PopulateGrid: index " + gridIndex + ": " + Join(grid));
 		tileLetters = GetTileLetters(grid);
 		tileSelecteds = new bool[tileCountMax];
 		isSelecting = false;
@@ -214,6 +242,16 @@ public class Model
 		{
 			stateNext = "levelExit";
 		}
+		else if ("Wishes" == tileName)
+		{
+			stateNext = "wishes";
+		}
+		else if (0 == tileName.IndexOf("wish_"))
+		{
+			stateNext = "levelExit";
+			int wishIndex = Toolkit.parseIndex(tileName);
+			SetupWish(wishButtonTexts[wishIndex]);
+		}
 		else
 		{
 			if (!isSelecting)
@@ -275,7 +313,7 @@ public class Model
 				}
 				else
 				{
-					stateNext = "levelExit";
+					stateNext = "wishes";
 				}
 			}
 		}
@@ -283,7 +321,7 @@ public class Model
 		{
 			SelectAll(false);
 		}
-		Debug.Log("Model.Submit: " + submission);
+		// Debug.Log("Model.Submit: " + submission);
 		submission = "";
 	}
 

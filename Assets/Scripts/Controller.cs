@@ -14,8 +14,9 @@ public class Controller
 		model.Start();
 		view.Start();
 		view.SetupTiles(model.tileCountMax);
-		view.SetupLevels(model.levelCountMax);
+		view.SetupLevels(model.levelCountMax, model.levelButtonNames, model.levelButtonTexts);
 		view.UpdateLevels(model.levelCount);
+		view.SetupWishes(model.wishButtonNames, model.wishButtonTexts);
 	}
 
 	public void OnMouseDown(string name)
@@ -39,6 +40,7 @@ public class Controller
 		string stateChange = model.Update();
 		if (null != stateChange)
 		{
+			view.UpdateLevels(model.levelCount);
 			ViewUtil.SetState(view.scene, stateChange);
 		}
 		view.UpdateLetters(model.tileLetters, model.invisible);

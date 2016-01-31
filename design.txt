@@ -12,11 +12,18 @@ FEATURES
 	Level buttons in grid.
 	Click button to go back to levels.
 	Load wishes from file.
-
-TODO
 	After last level, go back to levels.
 	Go back from levels to wishes.
+	After last level, go back to wishes.
 	Choose next spell from words.
+
+TODO
+	Smaller button.  Larger select.
+		Test case:  Jennifer Russ expects to realize which letter is selected.
+	Restart button.
+		Test case:  Jennifer Russ expects to restart.
+	Text of which level being tried.
+	Remove 'BYETHAN'
 	See score up:  double points per letter.
 	Hint:  Highlight first letter of a word that could clear board.
 		Hint again:  show another first letter.
