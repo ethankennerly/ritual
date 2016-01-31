@@ -40,7 +40,7 @@ public class Controller
 		if (null != stateChange)
 		{
 			view.UpdateLevels(model.levelCount,
-				model.wishIsCompletes[model.wishName]);
+				model.wishIsCompletes[model.wishName], model.wishesIsCompletes);
 			ViewUtil.SetState(view.scene, stateChange);
 			ViewUtil.SetText(view.wishText, model.wishName);
 		}

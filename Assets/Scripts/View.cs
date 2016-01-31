@@ -19,10 +19,12 @@ public class View
 	private GameObject[] buttons;
 	private GameObject[] selecteds;
 	private GameObject[] levelCompleteds;
+	private GameObject[] wishCompleteds;
 
 	private GameObject levelGrid;
 	private GameObject wishGrid;
 	private GameObject[] levels;
+	private GameObject[] wishes;
 
 	public void Start()
 	{
@@ -90,9 +92,10 @@ public class View
 		return tiles;
 	}
 
-	public void UpdateLevels(int levelCount, bool[] isCompletes)
+	public void UpdateLevels(int levelCount, bool[] isCompletes, bool[] wishesIsCompletes)
 	{
-		for (int tileIndex = 0; tileIndex < levels.Length; tileIndex++)
+		int tileIndex = 0;
+		for (tileIndex = 0; tileIndex < levels.Length; tileIndex++)
 		{
 			bool isActive = tileIndex < levelCount;
 			GameObject tile = levels[tileIndex];
@@ -102,22 +105,33 @@ public class View
 				levelCompleteds[tileIndex].SetActive(isCompletes[tileIndex]);
 			}
 		}
+		for (tileIndex = 0; tileIndex < wishes.Length; tileIndex++)
+		{
+			wishCompleteds[tileIndex].SetActive(wishesIsCompletes[tileIndex]);
+		}
+	}
+
+	public GameObject[] SetupCompleteds(GameObject[] parents)
+	{
+		GameObject[] completeds = new GameObject[parents.Length];
+		for (int tileIndex = 0; tileIndex < parents.Length; tileIndex++)
+		{
+			GameObject tile = parents[tileIndex];
+			completeds[tileIndex] = tile.transform.Find("Completed").gameObject;
+		}
+		return completeds;
 	}
 
 	public void SetupLevels(int levelCountMax, string[] levelNames, string[] levelTexts)
 	{
 		levels = GenerateTiles(levelGrid, levelCountMax, levelNames, levelTexts);
-		levelCompleteds = new GameObject[levelCountMax];
-		for (int tileIndex = 0; tileIndex < levelCountMax; tileIndex++)
-		{
-			GameObject tile = levels[tileIndex];
-			levelCompleteds[tileIndex] = tile.transform.Find("Completed").gameObject;
-		}
+		levelCompleteds = SetupCompleteds(levels);
 	}
 
 	public void SetupWishes(string[] wishNames, string[] wishTexts)
 	{
-		GenerateTiles(wishGrid, wishNames.Length, wishNames, wishTexts);
+		wishes = GenerateTiles(wishGrid, wishNames.Length, wishNames, wishTexts);
+		wishCompleteds = SetupCompleteds(wishes);
 	}
 
 	/**

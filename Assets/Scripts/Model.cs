@@ -27,6 +27,7 @@ public class Model
 	private Dictionary <string, string[][]> wishGrids;
 	private Dictionary <string, string[]> wishMessages;
 	public Dictionary <string, bool[]> wishIsCompletes;
+	public bool[] wishesIsCompletes;
 	private string wishesText = Toolkit.Read("Assets/Data/wishes.txt");
 	private string wordsText = Toolkit.Read("Assets/Data/word_list_moby_crossword.flat.txt");
 	private string creditsText = Toolkit.Read("Assets/Data/word_credits.txt");
@@ -42,6 +43,7 @@ public class Model
 	public int gridIndex = -1;
 	public string levelText;
 	public string wishName;
+	public int wishIndex;
 
 	/**
 	 * Each line is a string, which may be accessed by index.
@@ -110,11 +112,13 @@ public class Model
 		wishIsCompletes = new Dictionary<string, bool[]>();
 		int afterHeaderRow = 1;
 		string[] wishNames = new string[wishTable.Length - afterHeaderRow];
+		wishesIsCompletes = new bool[wishNames.Length];
 		for (int wishIndex = afterHeaderRow; wishIndex < wishTable.Length; wishIndex++)
 		{
 			string[] wishRow = wishTable[wishIndex];
 			string name = wishRow[nameColumn];
-			wishNames[wishIndex - 1] = name;
+			int index = wishIndex - 1;
+			wishNames[index] = name;
 			// Debug.Log("Model.LoadAllWishes: <" + name + ">");
 			string gridsFileName = wishRow[gridsColumn];
 			string messagesFileName = wishRow[messagesColumn];
@@ -122,6 +126,11 @@ public class Model
 			string[][] grids = ParseGrids(gridsText);
 			wishGrids[name] = grids;
 			wishIsCompletes[name] = new bool[grids.Length];
+			for (int gridIndex = 0; gridIndex < grids.Length; gridIndex++)
+			{
+				wishIsCompletes[name][gridIndex] = false;
+			}
+			wishesIsCompletes[index] = false;
 			string[] messages;
 			if (null == messagesFileName || "" == messagesFileName)
 			{
@@ -137,9 +146,10 @@ public class Model
 		return wishNames;
 	}
 
-	public void SetupWish(string wishButtonText)
+	public void SetupWish(int index)
 	{
-		wishName = wishButtonText;
+		wishIndex = index;
+		wishName = wishButtonTexts[index];
 		grids = wishGrids[wishName];
 		messages = wishMessages[wishName];
 		PopulateGrid(0);
@@ -153,7 +163,7 @@ public class Model
 		wishButtonTexts = LoadAllWishes();
 		SetupWishButtons(wishButtonTexts);
 		SetupLevelButtons(levelCountMax);
-		SetupWish("Tutorial");
+		SetupWish(0);
 	}
 
 	public void PopulateGrid(int newGridIndex)
@@ -266,7 +276,7 @@ public class Model
 		{
 			stateNext = "levelExit";
 			int wishIndex = Toolkit.parseIndex(tileName);
-			SetupWish(wishButtonTexts[wishIndex]);
+			SetupWish(wishIndex);
 		}
 		else
 		{
@@ -316,6 +326,18 @@ public class Model
 			|| credits.ContainsKey(submission);
 	}
 
+	public bool SetComplete(int gridIndex)
+	{
+		bool[] isCompletes = wishIsCompletes[wishName];
+		isCompletes[gridIndex] = true;
+		bool isAllComplete = true;
+		for (int tileIndex = 0; tileIndex < isCompletes.Length; tileIndex++)
+		{
+			isAllComplete = isAllComplete && isCompletes[tileIndex];
+		}
+		wishesIsCompletes[wishIndex] = isAllComplete;
+		return isAllComplete;
+	}
 	
 	public void Submit()
 	{
@@ -324,7 +346,7 @@ public class Model
 			RemoveSelected();
 			if (IsEmpty())
 			{
-				wishIsCompletes[wishName][gridIndex] = true;
+				SetComplete(gridIndex);
 				++gridIndex;
 				if (gridIndex < levelCount)
 				{

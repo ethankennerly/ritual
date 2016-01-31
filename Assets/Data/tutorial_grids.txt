@@ -1,9 +1,10 @@
-LOV
-..E
+WIS
+..H
 
-.AE
-R.D
+.TI
+E.R
 
-CAR
-L.E
-UST
+MAG
+.CI
+SPE
+.LL
