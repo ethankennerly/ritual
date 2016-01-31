@@ -9,10 +9,13 @@ FEATURES
 	Remove all letters.  See next grid.
 	Only hide letters if recognized word.
 	Read:  Click and drag to select word "LOVE".
-
-TODO
 	Level buttons in grid.
 	Click button to go back to levels.
+	Load wishes from file.
+
+TODO
+	After last level, go back to levels.
+	Go back from levels to wishes.
 	Choose next spell from words.
 	See score up:  double points per letter.
 	Hint:  Highlight first letter of a word that could clear board.

@@ -15,12 +15,12 @@ public class Model
 	public string[] tileLetters;
 	public bool[] tileSelecteds;
 	public string submission;
+	public string stateChange = null;
+	private string stateNext = null;
 
 	private string gridDelimiter = "\n\n";
-	private string lineDelimiter = "\n";
-	private string gridsText = Toolkit.Read("Assets/Data/grids.txt");
+	private string wishesText = Toolkit.Read("Assets/Data/wishes.txt");
 	private string wordsText = Toolkit.Read("Assets/Data/word_list_moby_crossword.flat.txt");
-	private string messagesText = Toolkit.Read("Assets/Data/messages.txt");
 	private string[] messages;
 	private Dictionary<string, bool> words;
 	/**
@@ -42,7 +42,7 @@ public class Model
 		for (int i = 0; i < gridStrings.Length; i++)
 		{
 			string text = gridStrings[i];
-			string[] lines = Toolkit.Split(text, lineDelimiter);
+			string[] lines = Toolkit.Split(text, Toolkit.lineDelimiter);
 			grids[i] = lines;
 			Debug.Log("Model.ParseGrids: " + i 
 				+ ": " + Join(grids[i]));
@@ -52,13 +52,13 @@ public class Model
 
 	public string Join(string[] grid)
 	{
-		return String.Join(lineDelimiter, grid);
+		return String.Join(Toolkit.lineDelimiter, grid);
 	}
 
 	public Dictionary<string, bool> ParseWords(string wordsText)
 	{
 		Dictionary<string, bool> words = new Dictionary<string, bool>();
-		string[] wordList = Toolkit.Split(wordsText, lineDelimiter);
+		string[] wordList = Toolkit.Split(wordsText, Toolkit.lineDelimiter);
 		for (int wordIndex = 0; wordIndex < wordList.Length; wordIndex++)
 		{
 			string word = wordList[wordIndex];
@@ -67,13 +67,56 @@ public class Model
 		return words;
 	}
 
-	public void Start()
+	private Dictionary <string, string[][]> wishGrids;
+	private Dictionary <string, string[]> wishMessages;
+
+	public void LoadAllWishes()
 	{
-		grids = ParseGrids(gridsText);
-		words = ParseWords(wordsText);
-		messages = Toolkit.Split(messagesText, lineDelimiter);
+		string[][] wishTable = Toolkit.ParseCsv(wishesText);
+		int nameColumn = 0;
+		int gridsColumn = 1;
+		int messagesColumn = 2;
+		string path = "Assets/Data/";
+		wishGrids = new Dictionary<string, string[][]>();
+		wishMessages = new Dictionary<string, string[]>();
+		int afterHeaderRow = 1;
+		for (int wishIndex = afterHeaderRow; wishIndex < wishTable.Length; wishIndex++)
+		{
+			string[] wishRow = wishTable[wishIndex];
+			string name = wishRow[nameColumn];
+			Debug.Log("Model.LoadAllWishes: <" + name + ">");
+			string gridsFileName = wishRow[gridsColumn];
+			string messagesFileName = wishRow[messagesColumn];
+			string gridsText = Toolkit.Read(path + gridsFileName);
+			string[][] grids = ParseGrids(gridsText);
+			wishGrids[name] = grids;
+			string[] messages;
+			if (null == messagesFileName || "" == messagesFileName)
+			{
+				messages = new string[0];
+			}
+			else
+			{
+				string messagesText = Toolkit.Read(path + messagesFileName);
+				messages = Toolkit.Split(messagesText, Toolkit.lineDelimiter);
+			}
+			wishMessages[name] = messages;
+		}
+	}
+
+	public void SetupWish(string wishName)
+	{
+		grids = wishGrids[wishName];
+		messages = wishMessages[wishName];
 		PopulateGrid(0);
 		levelCount = grids.Length;
+	}
+
+	public void Start()
+	{
+		words = ParseWords(wordsText);
+		LoadAllWishes();
+		SetupWish("Tutorial");
 	}
 
 	public void PopulateGrid(int newGridIndex)
@@ -160,16 +203,16 @@ public class Model
 
 	public string OnMouseDown(string tileName)
 	{
-		string state = null;
+		stateNext = null;
 		if (0 == tileName.IndexOf("level_"))
 		{
-			state = "levelEnter";
+			stateNext = "levelEnter";
 			gridIndex = Toolkit.parseIndex(tileName);
 			PopulateGrid(gridIndex);
 		}
 		else if ("LevelExit" == tileName)
 		{
-			state = "levelExit";
+			stateNext = "levelExit";
 		}
 		else
 		{
@@ -179,7 +222,7 @@ public class Model
 			}
 			Select(tileName);
 		}
-		return state;
+		return stateNext;
 	}
 
 	public void OnMouseEnter(string tileName)
@@ -225,7 +268,15 @@ public class Model
 			RemoveSelected();
 			if (IsEmpty())
 			{
-				PopulateGrid(++gridIndex);
+				++gridIndex;
+				if (gridIndex < levelCount)
+				{
+					PopulateGrid(gridIndex);
+				}
+				else
+				{
+					stateNext = "levelExit";
+				}
 			}
 		}
 		else
@@ -234,5 +285,12 @@ public class Model
 		}
 		Debug.Log("Model.Submit: " + submission);
 		submission = "";
+	}
+
+	public string Update()
+	{
+		stateChange = stateNext;
+		stateNext = null;
+		return stateChange;
 	}
 }

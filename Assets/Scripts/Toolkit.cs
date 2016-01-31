@@ -3,6 +3,8 @@ using System;  // String, StringSplitOptions
 
 public class Toolkit
 {
+	public static string lineDelimiter = "\n";
+
 	public static int parseIndex(string tileName)
 	{
 		int tileIndex = int.Parse(tileName.Split('_')[1]);
@@ -31,5 +33,26 @@ public class Toolkit
 		string[] delimiters = new string[] {delimiter};
 		string[] parts = text.Split(delimiters, StringSplitOptions.None);
 		return parts;
+	}
+
+	/**
+	 * Trim whitespace.  
+	 * Test case:  Expect 5 rows.  Got 6.  Last row is empty, from final line delimiter at the end of the file's text.
+	 *
+	 * Would be nice when there's more time to generate hashes.
+	 */
+	public static string[][] ParseCsv(string text, string fieldDelimiter = ",")
+	{
+		text = text.Trim();
+		string[] lines = Toolkit.Split(text, lineDelimiter);
+		string[][] table = new string[lines.Length][];
+		for (int lineIndex = 0; lineIndex < lines.Length; lineIndex++)
+		{
+			string line = lines[lineIndex];
+			string[] row = Toolkit.Split(line, fieldDelimiter);
+			table[lineIndex] = row;
+		}
+		Debug.Log("Toolkit.ParseCsv: lines " + table.Length);
+		return table;
 	}
 }

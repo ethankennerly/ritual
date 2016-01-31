@@ -21,11 +21,7 @@ public class Controller
 	public void OnMouseDown(string name)
 	{
 		// Debug.Log("Controller.OnMouseDown: " + name);
-		string state = model.OnMouseDown(name);
-		if (null != state)
-		{
-			ViewUtil.SetState(view.scene, state);
-		}
+		model.OnMouseDown(name);
 	}
 
 	public void OnMouseEnter(string name)
@@ -39,6 +35,11 @@ public class Controller
 		if (view.IsMouseUpNow())
 		{
 			model.OnMouseUp();
+		}
+		string stateChange = model.Update();
+		if (null != stateChange)
+		{
+			ViewUtil.SetState(view.scene, stateChange);
 		}
 		view.UpdateLetters(model.tileLetters, model.invisible);
 		view.UpdateSelecteds(model.tileSelecteds);
