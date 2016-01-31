@@ -19,12 +19,12 @@ FEATURES
 	Special word for credits 'ETHAN'
 	Small letter button.  Larg select.
 		Test case:  Jennifer Russ expects to realize which letter is selected.
-
-TODO
 	Restart button.
 		Test case:  Jennifer Russ expects to restart.
+
+TODO
 	Text of which level and theme being tried.
-		Test case:  Jennifer Russ expects to see.
+		Test case:  Jennifer Russ expects to see which level.
 	Mark which ones complete.
 	Hint:  Highlight first letter of a word that could clear board.
 		Hint again:  show another first letter.

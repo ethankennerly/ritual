@@ -32,6 +32,8 @@ public class Model
 	private string[][] grids;
 	public string[] grid;
 	public int gridIndex = -1;
+	public string levelText;
+	public string wishName;
 
 	/**
 	 * Each line is a string, which may be accessed by index.
@@ -133,8 +135,9 @@ public class Model
 		return wishNames;
 	}
 
-	public void SetupWish(string wishName)
+	public void SetupWish(string wishButtonText)
 	{
+		wishName = wishButtonText;
 		grids = wishGrids[wishName];
 		messages = wishMessages[wishName];
 		PopulateGrid(0);
@@ -168,6 +171,10 @@ public class Model
 		{
 			message = "";
 		}
+		levelText = wishName
+			+ " " + (gridIndex + 1).ToString()
+			+ " of "
+			+ grids.Length.ToString();
 	}
 
 	/**
@@ -248,6 +255,10 @@ public class Model
 		else if ("Wishes" == tileName)
 		{
 			stateNext = "wishes";
+		}
+		else if ("Restart" == tileName)
+		{
+			PopulateGrid(gridIndex);
 		}
 		else if (0 == tileName.IndexOf("wish_"))
 		{

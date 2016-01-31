@@ -42,7 +42,9 @@ public class Controller
 		{
 			view.UpdateLevels(model.levelCount);
 			ViewUtil.SetState(view.scene, stateChange);
+			ViewUtil.SetText(view.wishText, model.wishName);
 		}
+		ViewUtil.SetText(view.levelText, model.levelText);
 		view.UpdateLetters(model.tileLetters, model.invisible);
 		view.UpdateSelecteds(model.tileSelecteds);
 		ViewUtil.SetText(view.message, model.message);

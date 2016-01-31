@@ -53,7 +53,7 @@ public class Toolkit
 			string[] row = Toolkit.Split(line, fieldDelimiter);
 			table[lineIndex] = row;
 		}
-		Debug.Log("Toolkit.ParseCsv: lines " + table.Length);
+		// Debug.Log("Toolkit.ParseCsv: lines " + table.Length);
 		return table;
 	}
 }

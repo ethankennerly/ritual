@@ -4,6 +4,8 @@ using System;
 
 public class View
 {
+	public Text levelText;
+	public Text wishText;
 	public Text message;
 	public GameObject scene;
 	public delegate GameObject InstantiatePrefabDelegate(GameObject prefab, 
@@ -20,13 +22,14 @@ public class View
 	private GameObject levelGrid;
 	private GameObject wishGrid;
 	private GameObject[] levels;
-	private GameObject[] wishes;
 
 	public void Start()
 	{
 		if (null == main) {
 			main = GameObject.Find("Main");
 			message = GameObject.Find("Message").GetComponent<Text>();
+			levelText = GameObject.Find("LevelText").GetComponent<Text>();
+			wishText = GameObject.Find("WishText").GetComponent<Text>();
 			scene = GameObject.Find("Scene");
 			grid = GameObject.Find("Grid");
 			levelGrid = GameObject.Find("LevelGrid");
@@ -103,7 +106,7 @@ public class View
 
 	public void SetupWishes(string[] wishNames, string[] wishTexts)
 	{
-		wishes = GenerateTiles(wishGrid, wishNames.Length, wishNames, wishTexts);
+		GenerateTiles(wishGrid, wishNames.Length, wishNames, wishTexts);
 	}
 
 	/**
