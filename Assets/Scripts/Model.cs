@@ -10,6 +10,7 @@ public class Model
 	public int tileCountMax = 15;
 	public string[] tileLetters;
 	public bool[] tileSelecteds;
+	public string submission;
 
 	// I wish the API were as simple as JavaScript and Python:
 	// http://stackoverflow.com/questions/1126915/how-do-i-split-a-string-by-a-multi-character-delimiter-in-c
@@ -58,6 +59,7 @@ public class Model
 		tileLetters = GetTileLetters(grid);
 		tileSelecteds = new bool[tileCountMax];
 		isSelecting = false;
+		submission = "";
 	}
 
 	/**
@@ -89,7 +91,17 @@ public class Model
 	public void Select(string tileName)
 	{
 		int tileIndex = int.Parse(tileName.Split('_')[1]);
-		tileSelecteds[tileIndex] = !tileSelecteds[tileIndex];
+
+		bool wasSelected = tileSelecteds[tileIndex];
+		if (wasSelected)
+		{
+			submission = submission.Substring(0, submission.Length - 1);
+		}
+		else
+		{
+			submission += tileLetters[tileIndex];
+		}
+		tileSelecteds[tileIndex] = !wasSelected;
 	}
 
 	public void SelectAll(bool isSelected)
@@ -145,7 +157,14 @@ public class Model
 		if (isSelecting)
 		{
 			isSelecting = false;
-			//- SelectAll(false);
+			Submit();
 		}
+	}
+
+	public void Submit()
+	{
+		Debug.Log("Model.Submit: " + submission);
+		submission = "";
+		SelectAll(false);
 	}
 }
