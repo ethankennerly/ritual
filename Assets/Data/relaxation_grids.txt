@@ -28,7 +28,6 @@ DIT
 ESA
 IFS
 
-G..
 NGG
 IOY
 EAS
