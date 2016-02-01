@@ -15,8 +15,8 @@ onoremap  gggHG
 nnoremap  gggHG
 vnoremap  "+y
 noremap  
-vnoremap  :update
 nnoremap  :update
+vnoremap  :update
 onoremap  :update
 nmap  "+gP
 omap  "+gP
@@ -27,12 +27,13 @@ cnoremap   :simalt ~
 inoremap   :simalt ~
 map <silent> \t :call MakeGreen()
 nmap gx <Plug>NetrwBrowseX
+nmap <S-Insert> "+gP
+nnoremap <C-Tab> w
+nnoremap <C-F4> c
 nnoremap <silent> <Plug>NetrwBrowseX :call netrw#NetrwBrowseX(expand("<cWORD>"),0)
 onoremap <C-F4> c
-nnoremap <C-F4> c
 vnoremap <C-F4> c
 onoremap <C-Tab> w
-nnoremap <C-Tab> w
 vnoremap <C-Tab> w
 vmap <S-Insert> 
 vnoremap <BS> d
@@ -40,7 +41,6 @@ map <F5> :r !date /T:r !time /To
 vmap <C-Del> "*d
 vnoremap <S-Del> "+x
 vnoremap <C-Insert> "+y
-nmap <S-Insert> "+gP
 omap <S-Insert> "+gP
 cnoremap  gggHG
 inoremap  gggHG
@@ -58,6 +58,7 @@ set fileencodings=ucs-bom,utf-8,default,latin1
 set fileformats=unix
 set guifont=SimHei:h14
 set helplang=En
+set hlsearch
 set keymodel=startsel,stopsel
 set selection=exclusive
 set selectmode=mouse,key
@@ -73,26 +74,46 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +0 \archive\unity\ritual\design.txt
+badd +1 \archive\unity\ritual\session.vim
+badd +1 \archive\unity\ritual\design.txt
 badd +25 MainView.cs
 badd +1 \archive\unity\fit\Assets\Scripts\MainView.cs
 badd +5 \archive\unity\fit\Assets\Scripts\ButtonView.cs
 badd +34 ButtonView.cs
 badd +3 \archive\unity\fit\Assets\Scripts\Controller.cs
-badd +17 Controller.cs
+badd +44 Controller.cs
 badd +1 \archive\unity\fit\Assets\Scripts\Model.cs
 badd +1 \archive\unity\fit\Assets\Scripts\View.cs
-badd +148 Model.cs
-badd +102 View.cs
+badd +174 Model.cs
+badd +9 View.cs
 badd +3 grids.txt
-badd +15 Toolkit.cs
+badd +55 Toolkit.cs
 badd +1 \archive\unity\ritual\Assets\Data
-badd +0 \archive\unity\ritual\Assets\Data\grids.txt
+badd +82 \archive\unity\ritual\Assets\Data\grids.txt
 badd +31 \archive\unity\anagram\Assets\Scripts\View.cs
 badd +28 \archive\unity\anagram\Assets\Scripts\Main.cs
-badd +0 \archive\unity\auto-racer\Assets\Scripts\MainView.cs
-badd +0 \archive\unity\auto-racer\Assets\Scripts\View.cs
-badd +2 ..\..\..\recycle\recycle.cs
+badd +23 \archive\unity\auto-racer\Assets\Scripts\MainView.cs
+badd +31 \archive\unity\auto-racer\Assets\Scripts\View.cs
+badd +2 \archive\unity\recycle\recycle.cs
+badd +1 ViewUtil.cs
+badd +0 \archive\unity\auto-racer\Assets\Scripts\ToyView.cs
+badd +1 \archive\unity\ritual\Assets\Data\messages.txt
+badd +4 \archive\unity\ritual\Assets\Data\wishes.txt
+badd +5 \archive\unity\ritual\Assets\Data\love_grids.txt
+badd +1 \archive\unity\ritual\Assets\Data\tutorial_messages.txt
+badd +6 \archive\unity\ritual\Assets\Data\tutorial_grids.txt
+badd +6 \archive\unity\ritual\Assets\Data\credits_grids.txt
+badd +49 \archive\unity\ritual\Assets\Data\money_grids.txt
+badd +4 ..\Data\words_credits.txt
+badd +0 ..\Data\word_credits.txt
+badd +1 ..\Data\grief_grids.txt
+badd +31 ..\Data\health_grids.txt
+badd +23 ..\Data\success_grids.txt
+badd +36 ..\Data\healing_grids.txt
+badd +42 ..\DATA\relaxation_grids.txt
+badd +40 ..\Data\charm_grids.txt
+badd +43 ..\Data\banishing_grids.txt
+badd +62 ..\Data\skill_grids.txt
 silent! argdel *
 edit \archive\unity\ritual\design.txt
 set splitbelow splitright
@@ -104,8 +125,8 @@ set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 66 + 66) / 132)
-exe 'vert 2resize ' . ((&columns * 65 + 66) / 132)
+exe 'vert 1resize ' . ((&columns * 67 + 66) / 133)
+exe 'vert 2resize ' . ((&columns * 65 + 66) / 133)
 argglobal
 setlocal keymap=
 setlocal noarabic
@@ -208,12 +229,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 12 - ((11 * winheight(0) + 15) / 31)
+let s:l = 49 - ((22 * winheight(0) + 15) / 31)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-12
-normal! 027l
+49
+normal! 01l
 wincmd w
 argglobal
 edit \archive\unity\ritual\design.txt
@@ -318,15 +339,15 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 76 - ((23 * winheight(0) + 15) / 31)
+let s:l = 99 - ((0 * winheight(0) + 15) / 31)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-76
+99
 normal! 0
 wincmd w
-exe 'vert 1resize ' . ((&columns * 66 + 66) / 132)
-exe 'vert 2resize ' . ((&columns * 65 + 66) / 132)
+exe 'vert 1resize ' . ((&columns * 67 + 66) / 133)
+exe 'vert 2resize ' . ((&columns * 65 + 66) / 133)
 tabedit Model.cs
 set splitbelow splitright
 wincmd _ | wincmd |
@@ -341,11 +362,11 @@ set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 66 + 66) / 132)
+exe 'vert 1resize ' . ((&columns * 67 + 66) / 133)
 exe '2resize ' . ((&lines * 15 + 16) / 33)
-exe 'vert 2resize ' . ((&columns * 65 + 66) / 132)
+exe 'vert 2resize ' . ((&columns * 65 + 66) / 133)
 exe '3resize ' . ((&lines * 15 + 16) / 33)
-exe 'vert 3resize ' . ((&columns * 65 + 66) / 132)
+exe 'vert 3resize ' . ((&columns * 65 + 66) / 133)
 argglobal
 setlocal keymap=
 setlocal noarabic
@@ -448,122 +469,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 158 - ((13 * winheight(0) + 15) / 31)
+let s:l = 106 - ((11 * winheight(0) + 15) / 31)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-158
-normal! 0
-wincmd w
-argglobal
-edit View.cs
-setlocal keymap=
-setlocal noarabic
-setlocal autoindent
-setlocal balloonexpr=
-setlocal nobinary
-setlocal bufhidden=
-setlocal buflisted
-setlocal buftype=
-setlocal nocindent
-setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
-setlocal cinoptions=
-setlocal cinwords=if,else,while,do,for,switch
-setlocal colorcolumn=
-setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
-setlocal commentstring=/*%s*/
-setlocal complete=.,w,b,u,t,i
-setlocal concealcursor=
-setlocal conceallevel=0
-setlocal completefunc=
-setlocal nocopyindent
-setlocal cryptmethod=
-setlocal nocursorbind
-setlocal nocursorcolumn
-setlocal nocursorline
-setlocal define=
-setlocal dictionary=
-setlocal nodiff
-setlocal equalprg=
-setlocal errorformat=
-setlocal noexpandtab
-if &filetype != 'cs'
-setlocal filetype=cs
-endif
-setlocal foldcolumn=0
-setlocal foldenable
-setlocal foldexpr=0
-setlocal foldignore=#
-setlocal foldlevel=0
-setlocal foldmarker={{{,}}}
-setlocal foldmethod=manual
-setlocal foldminlines=1
-setlocal foldnestmax=20
-setlocal foldtext=foldtext()
-setlocal formatexpr=
-setlocal formatoptions=tcq
-setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
-setlocal grepprg=
-setlocal iminsert=2
-setlocal imsearch=2
-setlocal include=
-setlocal includeexpr=
-setlocal indentexpr=
-setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
-setlocal noinfercase
-setlocal iskeyword=@,48-57,_,192-255
-setlocal keywordprg=
-setlocal nolinebreak
-setlocal nolisp
-setlocal nolist
-setlocal makeprg=
-setlocal matchpairs=(:),{:},[:]
-setlocal modeline
-setlocal modifiable
-setlocal nrformats=octal,hex
-setlocal nonumber
-setlocal numberwidth=4
-setlocal omnifunc=
-setlocal path=
-setlocal nopreserveindent
-setlocal nopreviewwindow
-setlocal quoteescape=\\
-setlocal noreadonly
-setlocal norelativenumber
-setlocal norightleft
-setlocal rightleftcmd=search
-setlocal noscrollbind
-setlocal shiftwidth=8
-setlocal noshortname
-setlocal nosmartindent
-setlocal softtabstop=0
-setlocal nospell
-setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
-setlocal spellfile=
-setlocal spelllang=en
-setlocal statusline=
-setlocal suffixesadd=
-setlocal noswapfile
-setlocal synmaxcol=3000
-if &syntax != 'cs'
-setlocal syntax=cs
-endif
-setlocal tabstop=8
-setlocal tags=
-setlocal textwidth=0
-setlocal thesaurus=
-setlocal noundofile
-setlocal nowinfixheight
-setlocal nowinfixwidth
-setlocal wrap
-setlocal wrapmargin=0
-silent! normal! zE
-let s:l = 70 - ((3 * winheight(0) + 7) / 15)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-70
-normal! 03l
+106
+normal! 01l
 wincmd w
 argglobal
 edit Controller.cs
@@ -668,24 +579,144 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 26 - ((8 * winheight(0) + 7) / 15)
+let s:l = 46 - ((8 * winheight(0) + 7) / 15)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-26
-normal! 0
+46
+normal! 066l
 wincmd w
-exe 'vert 1resize ' . ((&columns * 66 + 66) / 132)
+argglobal
+edit View.cs
+setlocal keymap=
+setlocal noarabic
+setlocal autoindent
+setlocal balloonexpr=
+setlocal nobinary
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal nocindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+setlocal colorcolumn=
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
+setlocal commentstring=/*%s*/
+setlocal complete=.,w,b,u,t,i
+setlocal concealcursor=
+setlocal conceallevel=0
+setlocal completefunc=
+setlocal nocopyindent
+setlocal cryptmethod=
+setlocal nocursorbind
+setlocal nocursorcolumn
+setlocal nocursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal noexpandtab
+if &filetype != 'cs'
+setlocal filetype=cs
+endif
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=0
+setlocal foldignore=#
+setlocal foldlevel=0
+setlocal foldmarker={{{,}}}
+setlocal foldmethod=manual
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=tcq
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=2
+setlocal imsearch=2
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=
+setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
+setlocal noinfercase
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
+setlocal nolinebreak
+setlocal nolisp
+setlocal nolist
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
+setlocal modeline
+setlocal modifiable
+setlocal nrformats=octal,hex
+setlocal nonumber
+setlocal numberwidth=4
+setlocal omnifunc=
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norelativenumber
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=8
+setlocal noshortname
+setlocal nosmartindent
+setlocal softtabstop=0
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=en
+setlocal statusline=
+setlocal suffixesadd=
+setlocal noswapfile
+setlocal synmaxcol=3000
+if &syntax != 'cs'
+setlocal syntax=cs
+endif
+setlocal tabstop=8
+setlocal tags=
+setlocal textwidth=0
+setlocal thesaurus=
+setlocal noundofile
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+silent! normal! zE
+let s:l = 9 - ((1 * winheight(0) + 7) / 15)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+9
+normal! 029l
+wincmd w
+exe 'vert 1resize ' . ((&columns * 67 + 66) / 133)
 exe '2resize ' . ((&lines * 15 + 16) / 33)
-exe 'vert 2resize ' . ((&columns * 65 + 66) / 132)
+exe 'vert 2resize ' . ((&columns * 65 + 66) / 133)
 exe '3resize ' . ((&lines * 15 + 16) / 33)
-exe 'vert 3resize ' . ((&columns * 65 + 66) / 132)
-tabedit \archive\unity\ritual\Assets\Data\grids.txt
+exe 'vert 3resize ' . ((&columns * 65 + 66) / 133)
+tabedit ..\Data\healing_grids.txt
 set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+wincmd _ | wincmd |
+vsplit
+2wincmd h
+wincmd w
+wincmd w
 set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 44 + 66) / 133)
+exe 'vert 2resize ' . ((&columns * 44 + 66) / 133)
+exe 'vert 3resize ' . ((&columns * 43 + 66) / 133)
 argglobal
 setlocal keymap=
 setlocal noarabic
@@ -751,6 +782,7 @@ setlocal matchpairs=(:),{:},[:]
 setlocal modeline
 setlocal modifiable
 setlocal nrformats=octal,hex
+set number
 setlocal nonumber
 setlocal numberwidth=4
 setlocal omnifunc=
@@ -788,25 +820,15 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 16) / 32)
+let s:l = 5 - ((4 * winheight(0) + 15) / 31)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
+5
 normal! 0
-tabedit \archive\unity\auto-racer\Assets\Scripts\MainView.cs
-set splitbelow splitright
-wincmd _ | wincmd |
-vsplit
-1wincmd h
 wincmd w
-set nosplitbelow
-set nosplitright
-wincmd t
-set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 67 + 66) / 132)
-exe 'vert 2resize ' . ((&columns * 64 + 66) / 132)
 argglobal
+edit \archive\unity\ritual\Assets\Data\wishes.txt
 setlocal keymap=
 setlocal noarabic
 setlocal autoindent
@@ -837,8 +859,8 @@ setlocal nodiff
 setlocal equalprg=
 setlocal errorformat=
 setlocal noexpandtab
-if &filetype != 'cs'
-setlocal filetype=cs
+if &filetype != ''
+setlocal filetype=
 endif
 setlocal foldcolumn=0
 setlocal foldenable
@@ -871,7 +893,7 @@ setlocal matchpairs=(:),{:},[:]
 setlocal modeline
 setlocal modifiable
 setlocal nrformats=octal,hex
-setlocal nonumber
+setlocal number
 setlocal numberwidth=4
 setlocal omnifunc=
 setlocal path=
@@ -895,8 +917,8 @@ setlocal statusline=
 setlocal suffixesadd=
 setlocal noswapfile
 setlocal synmaxcol=3000
-if &syntax != 'cs'
-setlocal syntax=cs
+if &syntax != ''
+setlocal syntax=
 endif
 setlocal tabstop=8
 setlocal tags=
@@ -908,16 +930,15 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 23 - ((6 * winheight(0) + 15) / 31)
+let s:l = 5 - ((4 * winheight(0) + 15) / 31)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-23
-normal! 018l
-lcd C:\archive\unity\ritual\Assets\Scripts
+5
+normal! 0
 wincmd w
 argglobal
-edit C:\archive\unity\auto-racer\Assets\Scripts\View.cs
+edit \archive\unity\ritual\Assets\Data\tutorial_messages.txt
 setlocal keymap=
 setlocal noarabic
 setlocal autoindent
@@ -948,8 +969,8 @@ setlocal nodiff
 setlocal equalprg=
 setlocal errorformat=
 setlocal noexpandtab
-if &filetype != 'cs'
-setlocal filetype=cs
+if &filetype != ''
+setlocal filetype=
 endif
 setlocal foldcolumn=0
 setlocal foldenable
@@ -982,7 +1003,8 @@ setlocal matchpairs=(:),{:},[:]
 setlocal modeline
 setlocal modifiable
 setlocal nrformats=octal,hex
-setlocal nonumber
+set number
+setlocal number
 setlocal numberwidth=4
 setlocal omnifunc=
 setlocal path=
@@ -1006,8 +1028,8 @@ setlocal statusline=
 setlocal suffixesadd=
 setlocal noswapfile
 setlocal synmaxcol=3000
-if &syntax != 'cs'
-setlocal syntax=cs
+if &syntax != ''
+setlocal syntax=
 endif
 setlocal tabstop=8
 setlocal tags=
@@ -1019,17 +1041,17 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 31 - ((19 * winheight(0) + 15) / 31)
+let s:l = 3 - ((2 * winheight(0) + 15) / 31)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-31
+3
 normal! 0
-lcd C:\archive\unity\ritual\Assets\Scripts
 wincmd w
-exe 'vert 1resize ' . ((&columns * 67 + 66) / 132)
-exe 'vert 2resize ' . ((&columns * 64 + 66) / 132)
-tabnext 1
+exe 'vert 1resize ' . ((&columns * 44 + 66) / 133)
+exe 'vert 2resize ' . ((&columns * 44 + 66) / 133)
+exe 'vert 3resize ' . ((&columns * 43 + 66) / 133)
+tabnext 3
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf
 endif
