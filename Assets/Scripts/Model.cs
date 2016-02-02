@@ -31,9 +31,13 @@ public class Model
 	private Dictionary <string, string[]> wishMessages;
 	public Dictionary <string, bool[]> wishIsCompletes;
 	public bool[] wishesIsCompletes;
-	private string wishesText = Toolkit.Read("Assets/Data/wishes.txt");
-	private string wordsText = Toolkit.Read("Assets/Data/word_list_moby_crossword.flat.txt");
-	private string creditsText = Toolkit.Read("Assets/Data/word_credits.txt");
+
+	public string namesText;
+	public string creditsText;
+	public string wordsText;
+	public string messagesText;
+	public string[] gridTexts;
+	public string[] gridNames;
 	private string[] messages;
 	private Dictionary<string, bool> credits;
 	private Dictionary<string, bool> words;
@@ -106,27 +110,19 @@ public class Model
 	public string[] LoadAllWishes()
 	{
 		gridsTotal = 0;
-		string[][] wishTable = Toolkit.ParseCsv(wishesText);
-		int nameColumn = 0;
-		int gridsColumn = 1;
-		int messagesColumn = 2;
-		string path = "Assets/Data/";
 		wishGrids = new Dictionary<string, string[][]>();
 		wishMessages = new Dictionary<string, string[]>();
 		wishIsCompletes = new Dictionary<string, bool[]>();
-		int afterHeaderRow = 1;
-		string[] wishNames = new string[wishTable.Length - afterHeaderRow];
+		string[] wishNames = new string[gridTexts.Length];
 		wishesIsCompletes = new bool[wishNames.Length];
-		for (int wishIndex = afterHeaderRow; wishIndex < wishTable.Length; wishIndex++)
+		for (int wishIndex = 0; wishIndex < wishNames.Length; wishIndex++)
 		{
-			string[] wishRow = wishTable[wishIndex];
-			string name = wishRow[nameColumn];
-			int index = wishIndex - 1;
-			wishNames[index] = name;
+			string gridsFileName = gridNames[wishIndex];
+			string name = Toolkit.Split(gridsFileName, "_grids")[0];
+			name = name.ToUpper()[0] + name.Substring(1);
+			wishNames[wishIndex] = name;
 			// Debug.Log("Model.LoadAllWishes: <" + name + ">");
-			string gridsFileName = wishRow[gridsColumn];
-			string messagesFileName = wishRow[messagesColumn];
-			string gridsText = Toolkit.Read(path + gridsFileName);
+			string gridsText = gridTexts[wishIndex];
 			string[][] grids = ParseGrids(gridsText);
 			wishGrids[name] = grids;
 			wishIsCompletes[name] = new bool[grids.Length];
@@ -135,16 +131,15 @@ public class Model
 			{
 				wishIsCompletes[name][gridIndex] = false;
 			}
-			wishesIsCompletes[index] = false;
+			wishesIsCompletes[wishIndex] = false;
 			string[] messages;
-			if (null == messagesFileName || "" == messagesFileName)
+			if (0 == wishIndex)
 			{
-				messages = new string[0];
+				messages = Toolkit.Split(messagesText, Toolkit.lineDelimiter);
 			}
 			else
 			{
-				string messagesText = Toolkit.Read(path + messagesFileName);
-				messages = Toolkit.Split(messagesText, Toolkit.lineDelimiter);
+				messages = new string[0];
 			}
 			wishMessages[name] = messages;
 		}
