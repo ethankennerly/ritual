@@ -1,17 +1,21 @@
 using UnityEngine;  // Debug.Log
 using System;  // String, StringSplitOptions
 
+/**
+ * Bridge between portable game and platform-specific filesystem, game engine or toolkit.
+ * Animation, sound, UI, or other view are in ViewUtils instead.
+ */
 public class Toolkit
 {
 	public static string lineDelimiter = "\n";
 
-	public static int parseIndex(string tileName)
+	public static int ParseIndex(string tileName)
 	{
 		int tileIndex = int.Parse(tileName.Split('_')[1]);
 		return tileIndex;
 	}
 
-	public static string normalizeLines(string text)
+	private static string NormalizeLines(string text)
 	{
 		return text.Replace("\r\n", "\n");
 	}
@@ -19,7 +23,7 @@ public class Toolkit
 	public static string Read(string path)
 	{
 		string text = System.IO.File.ReadAllText(path);
-		text = normalizeLines(text);
+		text = NormalizeLines(text);
 		text = text.Trim();
 		// Debug.Log("Toolkit.Read: " + text);
 		return text;

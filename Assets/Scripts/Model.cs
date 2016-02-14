@@ -229,7 +229,7 @@ public class Model
 
 	public void Select(string tileName)
 	{
-		int tileIndex = Toolkit.parseIndex(tileName);
+		int tileIndex = Toolkit.ParseIndex(tileName);
 		bool wasSelected = tileSelecteds[tileIndex];
 		if (wasSelected)
 		{
@@ -269,7 +269,7 @@ public class Model
 		if (0 == tileName.IndexOf("level_"))
 		{
 			stateNext = "levelEnter";
-			gridIndex = Toolkit.parseIndex(tileName);
+			gridIndex = Toolkit.ParseIndex(tileName);
 			PopulateGrid(gridIndex);
 		}
 		else if ("LevelExit" == tileName)
@@ -287,7 +287,7 @@ public class Model
 		else if (0 == tileName.IndexOf("wish_"))
 		{
 			stateNext = "levelExit";
-			int wishIndex = Toolkit.parseIndex(tileName);
+			int wishIndex = Toolkit.ParseIndex(tileName);
 			SetupWish(wishIndex);
 		}
 		else
