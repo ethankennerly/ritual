@@ -4,33 +4,12 @@ using System.Collections;
 public class MainView : MonoBehaviour
 {
 	public bool isSwapLettersMode = false;
-	public TextAsset credits;
-	public TextAsset wordList;
-	public TextAsset messages;
-	public TextAsset[] grids;
 
 	private Controller controller = new Controller();
-
-	private void WireTextAssets()
-	{
-		Model model = controller.model;
-		model.creditsText = credits.text;
-		model.wordsText = wordList.text;
-		model.messagesText = messages.text;
-		model.gridTexts = new string[grids.Length];
-		model.gridNames = new string[grids.Length];
-		for (int i = 0; i < grids.Length; i++)
-		{
-			model.gridTexts[i] = grids[i].text;
-			model.gridNames[i] = grids[i].name;
-		}
-		model.ReadTexts();
-	}
 
 	void Start()
 	{
 		controller.model.isSwapLettersMode = isSwapLettersMode;
-		WireTextAssets();
 		ButtonView.isParent = true;
 		ButtonView.controller = controller;
 		controller.view.InstantiatePrefab = InstantiatePrefab;

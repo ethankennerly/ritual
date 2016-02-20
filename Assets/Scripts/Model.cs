@@ -56,27 +56,27 @@ public class Model
 
 	public void ReadTexts()
 	{
-		if (isSwapLettersMode) {
-			creditsText = Toolkit.Read("swap/word_credits.txt");
-			wordsText = Toolkit.Read("swap/word_list_moby_crossword.flat.txt");
-			messagesText = Toolkit.Read("swap/tutorial_messages.txt");
-			gridNames = new string[]{
-				"tutorial_grids.txt",
-				"love_grids.txt",
-				"health_grids.txt",
-				"money_grids.txt",
-				"charm_grids.txt",
-				"success_grids.txt",
-				"skill_grids.txt",
-				"healing_grids.txt",
-				"relaxation_grids.txt",
-				"grief_grids.txt",
-				"banishing_grids.txt",
-				"credits_grids.txt"
-			};
-			for (int index = 0; index < gridNames.Length; index++) {
-				gridTexts[index] = Toolkit.Read("swap/" + gridNames[index]);
-			}
+		string directory = isSwapLettersMode ? "swap" : "spell";
+		creditsText = Toolkit.Read(directory + "/word_credits.txt");
+		wordsText = Toolkit.Read(directory + "/word_list_moby_crossword.flat.txt");
+		messagesText = Toolkit.Read(directory + "/tutorial_messages.txt");
+		gridNames = new string[]{
+			"tutorial_grids.txt",
+			"love_grids.txt",
+			"health_grids.txt",
+			"money_grids.txt",
+			"charm_grids.txt",
+			"success_grids.txt",
+			"skill_grids.txt",
+			"healing_grids.txt",
+			"relaxation_grids.txt",
+			"grief_grids.txt",
+			"banishing_grids.txt",
+			"credits_grids.txt"
+		};
+		gridTexts = new string[gridNames.Length];
+		for (int index = 0; index < gridNames.Length; index++) {
+			gridTexts[index] = Toolkit.Read(directory + "/" + gridNames[index]);
 		}
 	}
 
@@ -198,6 +198,7 @@ public class Model
 
 	public void Start()
 	{
+		ReadTexts();
 		words = ParseWords(wordsText);
 		credits = ParseWords(creditsText);
 		wishButtonTexts = LoadAllWishes();
