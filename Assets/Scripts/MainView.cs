@@ -24,12 +24,13 @@ public class MainView : MonoBehaviour
 			model.gridTexts[i] = grids[i].text;
 			model.gridNames[i] = grids[i].name;
 		}
+		model.ReadTexts();
 	}
 
 	void Start()
 	{
-		WireTextAssets();
 		controller.model.isSwapLettersMode = isSwapLettersMode;
+		WireTextAssets();
 		ButtonView.isParent = true;
 		ButtonView.controller = controller;
 		controller.view.InstantiatePrefab = InstantiatePrefab;

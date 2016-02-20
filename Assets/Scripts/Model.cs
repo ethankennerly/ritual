@@ -54,6 +54,32 @@ public class Model
 	public string wishName;
 	public int wishIndex;
 
+	public void ReadTexts()
+	{
+		if (isSwapLettersMode) {
+			creditsText = Toolkit.Read("swap/word_credits.txt");
+			wordsText = Toolkit.Read("swap/word_list_moby_crossword.flat.txt");
+			messagesText = Toolkit.Read("swap/tutorial_messages.txt");
+			gridNames = new string[]{
+				"tutorial_grids.txt",
+				"love_grids.txt",
+				"health_grids.txt",
+				"money_grids.txt",
+				"charm_grids.txt",
+				"success_grids.txt",
+				"skill_grids.txt",
+				"healing_grids.txt",
+				"relaxation_grids.txt",
+				"grief_grids.txt",
+				"banishing_grids.txt",
+				"credits_grids.txt"
+			};
+			for (int index = 0; index < gridNames.Length; index++) {
+				gridTexts[index] = Toolkit.Read("swap/" + gridNames[index]);
+			}
+		}
+	}
+
 	/**
 	 * Each line is a string, which may be accessed by index.
 	 * Allows jagged arrays.
