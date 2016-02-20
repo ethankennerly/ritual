@@ -4,6 +4,7 @@ using System.Collections.Generic;  // Dictionary
 
 public class Model
 {
+	public ViewModel view = new ViewModel();
 	public int columnCountMax = 3;
 	public string invisible = ".";
 	public bool isSelecting;

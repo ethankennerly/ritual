@@ -38,7 +38,7 @@ FEATURES
 TODO
 	Experiment with swap two letters to connect words.
 		Stub is swap letters mode.
-		Levels for is swap letters mode.
+		Load levels for swap letters mode.
 		Tutor to swap letters.
 		Swap two letters.
 		Find word connect to letter.

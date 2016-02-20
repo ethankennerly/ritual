@@ -9,6 +9,11 @@ public class Toolkit
 {
 	public static string lineDelimiter = "\n";
 
+	public static void Log(string message)
+	{
+		Debug.Log(message);
+	}
+
 	public static int ParseIndex(string tileName)
 	{
 		int tileIndex = int.Parse(tileName.Split('_')[1]);
@@ -20,9 +25,23 @@ public class Toolkit
 		return text.Replace("\r\n", "\n");
 	}
 
+	/**
+	 * @param	path	Unconventionally, Unity expects the file extension is omitted.  This utility will try again to remove file extension if it can't load the first time.
+	 * Normalize line endings and trim whitespace.
+	 * Expects path is relative to "Assets/Resources/" folder.
+	 * Unity automatically embeds resource files.  Does not dynamically load file, because file system is incompatible on mobile device or HTML5.
+	 */
 	public static string Read(string path)
 	{
-		string text = System.IO.File.ReadAllText(path);
+		TextAsset asset = (TextAsset) Resources.Load(path);
+		if (null == asset) {
+			string basename = System.IO.Path.ChangeExtension(path, null);
+			asset = (TextAsset) Resources.Load(basename);
+			if (null == asset) {
+				Debug.Log("Did you omit the file extension?  Did you place the file in the Assets/Resources/ folder?  Path was " + path + " and without extension was " + basename);
+			}
+		}
+		string text = asset.text;
 		text = NormalizeLines(text);
 		text = text.Trim();
 		// Debug.Log("Toolkit.Read: " + text);

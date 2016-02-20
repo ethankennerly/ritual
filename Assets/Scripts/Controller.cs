@@ -13,6 +13,7 @@ public class Controller
 	{
 		model.Start();
 		view.Start();
+		ControllerUtil.SetupButtons(this, model.view.buttons);
 		view.SetupTiles(model.tileCountMax);
 		view.SetupLevels(model.levelCountMax, model.levelButtonNames, model.levelButtonTexts);
 		view.SetupWishes(model.wishButtonNames, model.wishButtonTexts);

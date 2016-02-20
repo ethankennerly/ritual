@@ -30,6 +30,7 @@ public class MainView : MonoBehaviour
 	{
 		WireTextAssets();
 		controller.model.isSwapLettersMode = isSwapLettersMode;
+		ButtonView.isParent = true;
 		ButtonView.controller = controller;
 		controller.view.InstantiatePrefab = InstantiatePrefab;
 		controller.Start();
