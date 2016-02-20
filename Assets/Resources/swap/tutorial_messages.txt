@@ -1,0 +1,4 @@
+In this ritual, you swap two letters to spell a word. Click "W," then drag to "I" to spell "WISH."
+You can spell any connected letters. Click "R," then drag to to "I" to spell "RITE."
+You can spell two words with a swap.  Click "M" and drag to "S", to spell "MAGIC" and "SPELL".  
+The letter to swap will always be the first letter of the word.  Find all the words to reach the next level.
