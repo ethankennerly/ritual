@@ -36,6 +36,13 @@ FEATURES
 	Charm level theme.
 
 TODO
+	Experiment with swap two letters to connect words.
+		Stub is swap letters mode.
+		Levels for is swap letters mode.
+		Tutor to swap letters.
+		Swap two letters.
+		Find word connect to letter.
+	Integrate toykit.
 	Luck level theme.
 	Power level theme.
 	Control level theme.
@@ -50,6 +57,8 @@ TODO
 	Shuffle adjacent letter placement.
 	Hint:  Highlight first letter of a word that could clear board.
 		Hint again:  show another first letter.
+	Experiment to end level after fixed number of moves.
+	Experiment to fill in other letters.
 	Hear a sound.
 	Blocks reveal a related quote.  Click to continue.
 	Blocks reveal an a letter that replaces button text.
@@ -57,9 +66,6 @@ TODO
 	See score up:  double points per letter.
 	See an animation.
 	Darken as increase in level.
-	Experiment with swap two letters to connect words.
-		End level after fixed number of moves.
-		Fill in other letters.
 	If cannot complete with any letters left, go back to levels.
 	Colorize and stylize by theme.
 

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class MainView : MonoBehaviour
 {
+	public bool isSwapLettersMode = false;
 	public TextAsset credits;
 	public TextAsset wordList;
 	public TextAsset messages;
@@ -28,6 +29,7 @@ public class MainView : MonoBehaviour
 	void Start()
 	{
 		WireTextAssets();
+		controller.model.isSwapLettersMode = isSwapLettersMode;
 		ButtonView.controller = controller;
 		controller.view.InstantiatePrefab = InstantiatePrefab;
 		controller.Start();

@@ -7,6 +7,7 @@ public class Model
 	public int columnCountMax = 3;
 	public string invisible = ".";
 	public bool isSelecting;
+	public bool isSwapLettersMode = false;
 	public string message;
 	public int rowCountMax = 5;
 	public int levelCountMax = 21;
