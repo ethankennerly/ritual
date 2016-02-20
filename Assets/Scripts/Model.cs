@@ -258,6 +258,11 @@ public class Model
 
 	public void Select(string tileName)
 	{
+		if (isSwapLettersMode) {
+			if (2 <= submission.Length) {
+				return;
+			}
+		}
 		int tileIndex = Toolkit.ParseIndex(tileName);
 		bool wasSelected = tileSelecteds[tileIndex];
 		if (wasSelected)
@@ -384,7 +389,7 @@ public class Model
 		return isAllComplete;
 	}
 	
-	public void Submit()
+	private void SubmitWord()
 	{
 		if (IsWord(submission))
 		{
@@ -407,7 +412,39 @@ public class Model
 		{
 			SelectAll(false);
 		}
-		// Debug.Log("Model.Submit: " + submission);
+		// Debug.Log("Model.SubmitWord: " + submission);
+	}
+
+	private void SwapLetters()
+	{
+		int previous = -1;
+		string letter = invisible;
+		for (int tileIndex = 0; tileIndex < tileSelecteds.Length; tileIndex++)
+		{
+			bool isSelected = tileSelecteds[tileIndex];
+			if (isSelected) {
+				if (invisible == letter) {
+					letter = tileLetters[tileIndex];
+					previous = tileIndex;
+				}
+				else {
+					tileLetters[previous] = tileLetters[tileIndex];
+					tileLetters[tileIndex] = letter;
+					break;
+				}
+			}
+		}
+	}
+
+	private void Submit()
+	{
+		if (isSwapLettersMode) {
+			SwapLetters();
+			SelectAll(false);
+		}
+		else {
+			SubmitWord();
+		}
 		submission = "";
 	}
 

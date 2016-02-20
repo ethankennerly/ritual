@@ -41,6 +41,7 @@ TODO
 		Load levels for swap letters mode.
 		Tutor to swap letters.
 		Swap two letters.
+			On second selected, swap letters.
 		Find word connect to letter.
 	Integrate toykit.
 	Luck level theme.
