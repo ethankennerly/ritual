@@ -256,13 +256,10 @@ public class Model
 		return letters;
 	}
 
+	private int[] swapIndexes = new int[2]{-1, -1};
+
 	public void Select(string tileName)
 	{
-		if (isSwapLettersMode) {
-			if (2 <= submission.Length) {
-				return;
-			}
-		}
 		int tileIndex = Toolkit.ParseIndex(tileName);
 		bool wasSelected = tileSelecteds[tileIndex];
 		if (wasSelected)
@@ -271,6 +268,12 @@ public class Model
 		}
 		else
 		{
+			if (isSwapLettersMode) {
+				if (2 <= submission.Length) {
+					return;
+				}
+				swapIndexes[submission.Length] = tileIndex;
+			}
 			submission += tileLetters[tileIndex];
 		}
 		tileSelecteds[tileIndex] = !wasSelected;
@@ -415,7 +418,7 @@ public class Model
 		// Debug.Log("Model.SubmitWord: " + submission);
 	}
 
-	private void SwapLetters()
+	private void SwapLettersSelecteds()
 	{
 		int previous = -1;
 		string letter = invisible;
@@ -436,10 +439,30 @@ public class Model
 		}
 	}
 
+	private bool SwapLetters(int[] swapIndexes)
+	{
+		if (!(tileSelecteds[swapIndexes[0]]
+		&& tileSelecteds[swapIndexes[1]])) {
+			return false;
+		}
+		else {
+			string letter = tileLetters[swapIndexes[0]];
+			tileLetters[swapIndexes[0]] = tileLetters[swapIndexes[1]];
+			tileLetters[swapIndexes[1]] = letter;
+			return true;
+		}
+	}
+
+	private void FindWord(int[] swapIndexes)
+	{
+	}
+
 	private void Submit()
 	{
 		if (isSwapLettersMode) {
-			SwapLetters();
+			if (SwapLetters(swapIndexes)) {
+				FindWord(swapIndexes);
+			}
 			SelectAll(false);
 		}
 		else {
