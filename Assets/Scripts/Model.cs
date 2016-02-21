@@ -198,6 +198,7 @@ public class Model
 
 	public void Start()
 	{
+		// new TestWordGrid();
 		ReadTexts();
 		words = ParseWords(wordsText);
 		credits = ParseWords(creditsText);
@@ -453,7 +454,13 @@ public class Model
 		}
 	}
 
-	private void FindWord(int[] swapIndexes)
+	/**
+	 * Starting with one of the indexes.
+	 * Like Boggle:
+	 * Searching adjacent letters.
+	 * Using a letter only once.
+	 */
+	private void FindWord(int[] firstIndexes)
 	{
 	}
 

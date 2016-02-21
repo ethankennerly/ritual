@@ -44,6 +44,8 @@ TODO
 			On second selected, swap letters.
 		TODO
 		After swap, find a word connect to letter.
+			http://exceptional-code.blogspot.com/2012/02/solving-boggle-game-recursion-prefix.html
+			http://stackoverflow.com/questions/746082/how-to-find-list-of-possible-words-from-a-letter-matrix-boggle-solver
 	Integrate toykit.
 	Luck level theme.
 	Power level theme.
