@@ -198,7 +198,6 @@ public class Model
 
 	public void Start()
 	{
-		// new TestWordGrid();
 		ReadTexts();
 		words = ParseWords(wordsText);
 		credits = ParseWords(creditsText);
