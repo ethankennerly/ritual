@@ -6,6 +6,7 @@
  */
 using System;  // Exception
 using System.Collections.Generic;  // List
+using System.Linq;  // Dictionary Select
 using System.Threading;
 using UnityEngine;
 using NUnit.Framework;
@@ -14,6 +15,34 @@ using NUnit.Framework;
 [Category("My Tests")]
 internal class TestWordGrid
 {
+	/**
+	 * Tim Rogers, 2011-05
+	 * http://stackoverflow.com/questions/5899171/is-there-anyway-to-handy-convert-a-dictionary-to-string
+	 */
+	public static string ToDebugString<TKey, TValue>(IDictionary<TKey, TValue> dictionary)
+	{
+	    return "{" + string.Join(",", dictionary.Select(kv => kv.Key.ToString() + "=" + kv.Value.ToString()).ToArray()) + "}";
+	}
+	
+	[Test]
+	public void SetDictionary()
+	{
+		WordGrid grid = new WordGrid();
+		grid.SetDictionary("ab\nad\nback\ncab");
+		Assert.AreEqual(3, grid.prefixes.Count, 
+			ToDebugString(grid.prefixes));
+		Assert.AreEqual(2, grid.prefixes['a'].Count);
+		Assert.AreEqual(0, grid.prefixes['a']['b'].Count);
+		Assert.AreEqual(0, grid.prefixes['a']['d'].Count);
+		Assert.AreEqual(1, grid.prefixes['b'].Count);
+		Assert.AreEqual(1, grid.prefixes['b']['a'].Count);
+		Assert.AreEqual(1, grid.prefixes['b']['a']['c'].Count);
+		Assert.AreEqual(0, grid.prefixes['b']['a']['c']['k'].Count);
+		Assert.AreEqual(1, grid.prefixes['c'].Count);
+		Assert.AreEqual(1, grid.prefixes['c']['a'].Count);
+		Assert.AreEqual(0, grid.prefixes['c']['a']['b'].Count);
+	}
+
 	[Test]
 	public void FindWords()
 	{

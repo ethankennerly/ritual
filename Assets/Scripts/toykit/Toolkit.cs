@@ -60,6 +60,28 @@ public class Toolkit
 	}
 
 	/**
+	 * Portable wrapper for languages without ToCharArray
+	 */
+	public static char[] SplitLetters(string word)
+	{
+		return word.ToCharArray();
+	}
+
+	/**
+	 * This was the most concise way I found to split a string without depending on other libraries.
+	 * In ActionScript splitting a string is concise:  s.split("");
+	 */
+	public static string[] SplitString(string text)
+	{
+		char [] letters = text.ToCharArray();
+		string[] available = new string[letters.Length];
+		for (int i = 0; i < letters.Length; i++) {
+			available[i] = letters[i].ToString();
+		}
+		return available;
+	}
+
+	/**
 	 * Trim whitespace.  
 	 * Test case:  Expect 5 rows.  Got 6.  Last row is empty, from final line delimiter at the end of the file's text.
 	 *
