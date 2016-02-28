@@ -33,9 +33,9 @@ public class WordGrid
 	}
 
 	/**
-	 * Minimum length 2.
-	 * @param	cellLetters	Special case "qu" might be one cell.
-	 * @return	Longest first.
+	 * List cells to search.  If a word is found, append it.  Search adjacent cells.
+	 * @param	cellLetters	Not handled:  Special case "qu" might be one cell.
+	 * @return	Longest first down to minimum length.
 	 * Example @see Editor/Tests/TestWordGrid
 	 * References:
 	 * http://exceptional-code.blogspot.com/2012/02/solving-boggle-game-recursion-prefix.html
@@ -45,23 +45,46 @@ public class WordGrid
 	{
 		List<string> words = new List<string>();
 		List<int> searchCells = new List<int>();
-		int searchIndex;
-		for (searchIndex = 0; searchIndex < startCells.Length; searchIndex++) {
-			searchCells.Add(startCells[searchIndex]);
-		}
-		for (searchIndex = 0; searchIndex < searchCells.Count; searchIndex++) {
-			int searchCell = searchCells[searchIndex];
-			char letter = cellLetters[searchCell][0];
+		int[] offsets = new int[]{
+			- columnCount,
+			columnCount,
+			-1,
+			1,
+			- columnCount - 1,
+			- columnCount + 1,
+			columnCount - 1,
+			columnCount + 1
+		};
+		int cellCount = columnCount * rowCount;
+		for (int startIndex = 0; startIndex < startCells.Length; startIndex++) {
+			int startCell = startCells[startIndex];
+			searchCells.Add(startCell);
 			CharToDictionary parent = prefixes;
 			bool[] isVisits = new bool[cellLetters.Length];
 			string word = "";
-			if (!isVisits[searchCell] && parent.ContainsKey(letter)) {
-				isVisits[searchCell] = true;
-				word += letter;
+			while (1 <= searchCells.Count) {
+				int searchCell = searchCells[0];
+				searchCells.Remove(searchCell);
+				char letter = cellLetters[searchCell][0];
+				if (!isVisits[searchCell] && parent.ContainsKey(letter)) {
+					isVisits[searchCell] = true;
+					parent = parent[letter];
+					word += letter;
+					for (int offsetIndex = 0; offsetIndex < offsets.Length; offsetIndex++) {
+						int adjacent = searchCell + offsets[offsetIndex];
+						if (0 <= adjacent && adjacent < cellCount) {
+							if (!isVisits[adjacent]) {
+								searchCells.Add(adjacent);
+							}
+						}
+					}
 
-			}
-			if (minimumLength <= word.Length) {
-				words.Add(word);
+				}
+				if (0 == parent.Count && minimumLength <= word.Length) {
+					if (words.IndexOf(word) <= -1) {
+						words.Add(word);
+					}
+				}
 			}
 		}
 		return words;

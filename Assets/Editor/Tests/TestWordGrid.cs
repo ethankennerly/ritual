@@ -23,6 +23,16 @@ internal class TestWordGrid
 	{
 	    return "{" + string.Join(",", dictionary.Select(kv => kv.Key.ToString() + "=" + kv.Value.ToString()).ToArray()) + "}";
 	}
+
+	public static string ListToString<T>(List<T> aList)
+	{
+		string text = "[" + aList[0];
+		for (int index = 1; index < aList.Count; index++) {
+			text += ", " + aList[index];
+		}
+		text += "]";
+		return text;
+	}
 	
 	[Test]
 	public void SetDictionary()
@@ -52,7 +62,7 @@ internal class TestWordGrid
 			new string[]{"c", "b", ".", 
 			 "a", "k", "."},
 			3, 2, new int[]{1, 3});
-		Assert.AreEqual(2, words.Count, words.ToString());
+		Assert.AreEqual(2, words.Count, ListToString(words));
 		Assert.AreEqual("back", words[0]);
 		Assert.AreEqual("ab", words[1]);
 	}
