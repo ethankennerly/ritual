@@ -82,7 +82,13 @@ public class WordGrid
 				}
 				if (0 == parent.Count && minimumLength <= word.Length) {
 					if (words.IndexOf(word) <= -1) {
-						words.Add(word);
+						int wordIndex;
+						for (wordIndex = 0; wordIndex < words.Count; wordIndex++) {
+							if (words[wordIndex].Length < word.Length) {
+								break;
+							}
+						}
+						words.Insert(wordIndex, word);
 					}
 				}
 			}

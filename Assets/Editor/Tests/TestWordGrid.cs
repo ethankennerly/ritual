@@ -61,7 +61,7 @@ internal class TestWordGrid
 		List<string> words = grid.FindWords(
 			new string[]{"c", "b", ".", 
 			 "a", "k", "."},
-			3, 2, new int[]{1, 3});
+			3, 2, new int[]{3, 1});
 		Assert.AreEqual(2, words.Count, ListToString(words));
 		Assert.AreEqual("back", words[0]);
 		Assert.AreEqual("ab", words[1]);
