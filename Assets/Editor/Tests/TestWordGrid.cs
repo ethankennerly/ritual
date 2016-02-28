@@ -52,7 +52,7 @@ internal class TestWordGrid
 			new string[]{"c", "b", ".", 
 			 "a", "k", "."},
 			3, 2, new int[]{1, 3});
-		Assert.AreEqual(2, words.Count);
+		Assert.AreEqual(2, words.Count, words.ToString());
 		Assert.AreEqual("back", words[0]);
 		Assert.AreEqual("ab", words[1]);
 	}

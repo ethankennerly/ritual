@@ -8,6 +8,7 @@ public class CharToDictionary : Dictionary<char, CharToDictionary>{}
 public class WordGrid
 {
 	public CharToDictionary prefixes;
+	public int minimumLength = 1;
 
 	/**
 	 * Construct prefix tree from list of words, one per line.
@@ -32,6 +33,8 @@ public class WordGrid
 	}
 
 	/**
+	 * Minimum length 2.
+	 * @param	cellLetters	Special case "qu" might be one cell.
 	 * @return	Longest first.
 	 * Example @see Editor/Tests/TestWordGrid
 	 * References:
@@ -41,6 +44,26 @@ public class WordGrid
 	public List<string> FindWords(string[] cellLetters, int columnCount, int rowCount, int[] startCells)
 	{
 		List<string> words = new List<string>();
+		List<int> searchCells = new List<int>();
+		int searchIndex;
+		for (searchIndex = 0; searchIndex < startCells.Length; searchIndex++) {
+			searchCells.Add(startCells[searchIndex]);
+		}
+		for (searchIndex = 0; searchIndex < searchCells.Count; searchIndex++) {
+			int searchCell = searchCells[searchIndex];
+			char letter = cellLetters[searchCell][0];
+			CharToDictionary parent = prefixes;
+			bool[] isVisits = new bool[cellLetters.Length];
+			string word = "";
+			if (!isVisits[searchCell] && parent.ContainsKey(letter)) {
+				isVisits[searchCell] = true;
+				word += letter;
+
+			}
+			if (minimumLength <= word.Length) {
+				words.Add(word);
+			}
+		}
 		return words;
 	}
 }
