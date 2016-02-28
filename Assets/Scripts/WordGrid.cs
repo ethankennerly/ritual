@@ -9,6 +9,10 @@ public class WordGrid
 {
 	public CharToDictionary prefixes;
 
+	/**
+	 * Construct prefix tree from list of words, one per line.
+	 * Example @see Editor/Tests/TestWordGrid
+	 */
 	public void SetDictionary(string dictionaryText)
 	{
 		prefixes = new CharToDictionary();

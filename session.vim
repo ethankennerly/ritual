@@ -27,9 +27,9 @@ cnoremap   :simalt ~
 inoremap   :simalt ~
 map <silent> \t :call MakeGreen()
 nmap gx <Plug>NetrwBrowseX
-nnoremap <C-F4> c
-nnoremap <C-Tab> w
 nmap <S-Insert> "+gP
+nnoremap <C-Tab> w
+nnoremap <C-F4> c
 nnoremap <silent> <Plug>NetrwBrowseX :call netrw#NetrwBrowseX(expand("<cWORD>"),0)
 onoremap <C-F4> c
 vnoremap <C-F4> c
@@ -76,7 +76,7 @@ endif
 set shortmess=aoO
 badd +1 \archive\unity\ritual\session.vim
 badd +1 \archive\unity\ritual\design.txt
-badd +25 MainView.cs
+badd +18 MainView.cs
 badd +1 \archive\unity\fit\Assets\Scripts\MainView.cs
 badd +5 \archive\unity\fit\Assets\Scripts\ButtonView.cs
 badd +34 ButtonView.cs
@@ -84,7 +84,7 @@ badd +3 \archive\unity\fit\Assets\Scripts\Controller.cs
 badd +46 Controller.cs
 badd +1 \archive\unity\fit\Assets\Scripts\Model.cs
 badd +1 \archive\unity\fit\Assets\Scripts\View.cs
-badd +34 Model.cs
+badd +58 Model.cs
 badd +9 View.cs
 badd +3 grids.txt
 badd +55 Toolkit.cs
@@ -115,6 +115,10 @@ badd +40 \archive\unity\ritual\Assets\Data\charm_grids.txt
 badd +36 \archive\unity\ritual\Assets\Data\banishing_grids.txt
 badd +62 \archive\unity\ritual\Assets\Data\skill_grids.txt
 badd +12 ..\Data\names.txt
+badd +0 WordGrid.cs
+badd +43 ..\Editor\Tests\TestWordGrid.cs
+badd +0 toykit\Toolkit.cs
+badd +0 ..\..\..\anagram\Assets\Scripts\Toolkit.cs
 silent! argdel *
 edit \archive\unity\ritual\design.txt
 set splitbelow splitright
@@ -230,12 +234,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 49 - ((0 * winheight(0) + 15) / 31)
+let s:l = 48 - ((23 * winheight(0) + 15) / 31)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-49
-normal! 01l
+48
+normal! 0
 wincmd w
 argglobal
 edit \archive\unity\ritual\design.txt
@@ -349,18 +353,25 @@ normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 67 + 66) / 133)
 exe 'vert 2resize ' . ((&columns * 65 + 66) / 133)
-tabedit Model.cs
+tabedit toykit\Toolkit.cs
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
 1wincmd h
+wincmd _ | wincmd |
+split
+1wincmd k
+wincmd w
 wincmd w
 set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
+exe '1resize ' . ((&lines * 15 + 16) / 33)
 exe 'vert 1resize ' . ((&columns * 66 + 66) / 133)
+exe '2resize ' . ((&lines * 15 + 16) / 33)
 exe 'vert 2resize ' . ((&columns * 66 + 66) / 133)
+exe 'vert 3resize ' . ((&columns * 66 + 66) / 133)
 argglobal
 setlocal keymap=
 setlocal noarabic
@@ -394,233 +405,6 @@ setlocal errorformat=
 setlocal noexpandtab
 if &filetype != 'cs'
 setlocal filetype=cs
-endif
-setlocal foldcolumn=0
-setlocal foldenable
-setlocal foldexpr=0
-setlocal foldignore=#
-setlocal foldlevel=0
-setlocal foldmarker={{{,}}}
-setlocal foldmethod=manual
-setlocal foldminlines=1
-setlocal foldnestmax=20
-setlocal foldtext=foldtext()
-setlocal formatexpr=
-setlocal formatoptions=tcq
-setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
-setlocal grepprg=
-setlocal iminsert=2
-setlocal imsearch=2
-setlocal include=
-setlocal includeexpr=
-setlocal indentexpr=
-setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
-setlocal noinfercase
-setlocal iskeyword=@,48-57,_,192-255
-setlocal keywordprg=
-setlocal nolinebreak
-setlocal nolisp
-setlocal nolist
-setlocal makeprg=
-setlocal matchpairs=(:),{:},[:]
-setlocal modeline
-setlocal modifiable
-setlocal nrformats=octal,hex
-setlocal nonumber
-setlocal numberwidth=4
-setlocal omnifunc=
-setlocal path=
-setlocal nopreserveindent
-setlocal nopreviewwindow
-setlocal quoteescape=\\
-setlocal noreadonly
-setlocal norelativenumber
-setlocal norightleft
-setlocal rightleftcmd=search
-setlocal noscrollbind
-setlocal shiftwidth=8
-setlocal noshortname
-setlocal nosmartindent
-setlocal softtabstop=0
-setlocal nospell
-setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
-setlocal spellfile=
-setlocal spelllang=en
-setlocal statusline=
-setlocal suffixesadd=
-setlocal noswapfile
-setlocal synmaxcol=3000
-if &syntax != 'cs'
-setlocal syntax=cs
-endif
-setlocal tabstop=8
-setlocal tags=
-setlocal textwidth=0
-setlocal thesaurus=
-setlocal noundofile
-setlocal nowinfixheight
-setlocal nowinfixwidth
-setlocal wrap
-setlocal wrapmargin=0
-silent! normal! zE
-let s:l = 122 - ((12 * winheight(0) + 15) / 31)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-122
-normal! 026l
-wincmd w
-argglobal
-edit MainView.cs
-setlocal keymap=
-setlocal noarabic
-setlocal autoindent
-setlocal balloonexpr=
-setlocal nobinary
-setlocal bufhidden=
-setlocal buflisted
-setlocal buftype=
-setlocal nocindent
-setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
-setlocal cinoptions=
-setlocal cinwords=if,else,while,do,for,switch
-setlocal colorcolumn=
-setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
-setlocal commentstring=/*%s*/
-setlocal complete=.,w,b,u,t,i
-setlocal concealcursor=
-setlocal conceallevel=0
-setlocal completefunc=
-setlocal nocopyindent
-setlocal cryptmethod=
-setlocal nocursorbind
-setlocal nocursorcolumn
-setlocal nocursorline
-setlocal define=
-setlocal dictionary=
-setlocal nodiff
-setlocal equalprg=
-setlocal errorformat=
-setlocal noexpandtab
-if &filetype != 'cs'
-setlocal filetype=cs
-endif
-setlocal foldcolumn=0
-setlocal foldenable
-setlocal foldexpr=0
-setlocal foldignore=#
-setlocal foldlevel=0
-setlocal foldmarker={{{,}}}
-setlocal foldmethod=manual
-setlocal foldminlines=1
-setlocal foldnestmax=20
-setlocal foldtext=foldtext()
-setlocal formatexpr=
-setlocal formatoptions=tcq
-setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
-setlocal grepprg=
-setlocal iminsert=2
-setlocal imsearch=2
-setlocal include=
-setlocal includeexpr=
-setlocal indentexpr=
-setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
-setlocal noinfercase
-setlocal iskeyword=@,48-57,_,192-255
-setlocal keywordprg=
-setlocal nolinebreak
-setlocal nolisp
-setlocal nolist
-setlocal makeprg=
-setlocal matchpairs=(:),{:},[:]
-setlocal modeline
-setlocal modifiable
-setlocal nrformats=octal,hex
-setlocal nonumber
-setlocal numberwidth=4
-setlocal omnifunc=
-setlocal path=
-setlocal nopreserveindent
-setlocal nopreviewwindow
-setlocal quoteescape=\\
-setlocal noreadonly
-setlocal norelativenumber
-setlocal norightleft
-setlocal rightleftcmd=search
-setlocal noscrollbind
-setlocal shiftwidth=8
-setlocal noshortname
-setlocal nosmartindent
-setlocal softtabstop=0
-setlocal nospell
-setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
-setlocal spellfile=
-setlocal spelllang=en
-setlocal statusline=
-setlocal suffixesadd=
-setlocal noswapfile
-setlocal synmaxcol=3000
-if &syntax != 'cs'
-setlocal syntax=cs
-endif
-setlocal tabstop=8
-setlocal tags=
-setlocal textwidth=0
-setlocal thesaurus=
-setlocal noundofile
-setlocal nowinfixheight
-setlocal nowinfixwidth
-setlocal wrap
-setlocal wrapmargin=0
-silent! normal! zE
-let s:l = 18 - ((17 * winheight(0) + 15) / 31)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-18
-normal! 031l
-wincmd w
-exe 'vert 1resize ' . ((&columns * 66 + 66) / 133)
-exe 'vert 2resize ' . ((&columns * 66 + 66) / 133)
-tabedit \archive\unity\ritual\Assets\Data\tutorial_messages.txt
-set splitbelow splitright
-set nosplitbelow
-set nosplitright
-wincmd t
-set winheight=1 winwidth=1
-argglobal
-setlocal keymap=
-setlocal noarabic
-setlocal autoindent
-setlocal balloonexpr=
-setlocal nobinary
-setlocal bufhidden=
-setlocal buflisted
-setlocal buftype=
-setlocal nocindent
-setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
-setlocal cinoptions=
-setlocal cinwords=if,else,while,do,for,switch
-setlocal colorcolumn=
-setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
-setlocal commentstring=/*%s*/
-setlocal complete=.,w,b,u,t,i
-setlocal concealcursor=
-setlocal conceallevel=0
-setlocal completefunc=
-setlocal nocopyindent
-setlocal cryptmethod=
-setlocal nocursorbind
-setlocal nocursorcolumn
-setlocal nocursorline
-setlocal define=
-setlocal dictionary=
-setlocal nodiff
-setlocal equalprg=
-setlocal errorformat=
-setlocal noexpandtab
-if &filetype != ''
-setlocal filetype=
 endif
 setlocal foldcolumn=0
 setlocal foldenable
@@ -678,8 +462,8 @@ setlocal statusline=
 setlocal suffixesadd=
 setlocal noswapfile
 setlocal synmaxcol=3000
-if &syntax != ''
-setlocal syntax=
+if &syntax != 'cs'
+setlocal syntax=cs
 endif
 setlocal tabstop=8
 setlocal tags=
@@ -691,11 +475,589 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 16) / 32)
+let s:l = 77 - ((5 * winheight(0) + 7) / 15)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
+77
+normal! 047l
+wincmd w
+argglobal
+edit ..\Editor\Tests\TestWordGrid.cs
+setlocal keymap=
+setlocal noarabic
+setlocal autoindent
+setlocal balloonexpr=
+setlocal nobinary
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal nocindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+setlocal colorcolumn=
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
+setlocal commentstring=/*%s*/
+setlocal complete=.,w,b,u,t,i
+setlocal concealcursor=
+setlocal conceallevel=0
+setlocal completefunc=
+setlocal nocopyindent
+setlocal cryptmethod=
+setlocal nocursorbind
+setlocal nocursorcolumn
+setlocal nocursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal noexpandtab
+if &filetype != 'cs'
+setlocal filetype=cs
+endif
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=0
+setlocal foldignore=#
+setlocal foldlevel=0
+setlocal foldmarker={{{,}}}
+setlocal foldmethod=manual
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=tcq
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=2
+setlocal imsearch=2
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=
+setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
+setlocal noinfercase
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
+setlocal nolinebreak
+setlocal nolisp
+setlocal nolist
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
+setlocal modeline
+setlocal modifiable
+setlocal nrformats=octal,hex
+set number
+setlocal number
+setlocal numberwidth=4
+setlocal omnifunc=
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norelativenumber
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=8
+setlocal noshortname
+setlocal nosmartindent
+setlocal softtabstop=0
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=en
+setlocal statusline=
+setlocal suffixesadd=
+setlocal noswapfile
+setlocal synmaxcol=3000
+if &syntax != 'cs'
+setlocal syntax=cs
+endif
+setlocal tabstop=8
+setlocal tags=
+setlocal textwidth=0
+setlocal thesaurus=
+setlocal noundofile
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+silent! normal! zE
+let s:l = 43 - ((7 * winheight(0) + 7) / 15)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+43
+normal! 02l
+wincmd w
+argglobal
+edit WordGrid.cs
+setlocal keymap=
+setlocal noarabic
+setlocal autoindent
+setlocal balloonexpr=
+setlocal nobinary
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal nocindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+setlocal colorcolumn=
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
+setlocal commentstring=/*%s*/
+setlocal complete=.,w,b,u,t,i
+setlocal concealcursor=
+setlocal conceallevel=0
+setlocal completefunc=
+setlocal nocopyindent
+setlocal cryptmethod=
+setlocal nocursorbind
+setlocal nocursorcolumn
+setlocal nocursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal noexpandtab
+if &filetype != 'cs'
+setlocal filetype=cs
+endif
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=0
+setlocal foldignore=#
+setlocal foldlevel=0
+setlocal foldmarker={{{,}}}
+setlocal foldmethod=manual
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=tcq
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=2
+setlocal imsearch=2
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=
+setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
+setlocal noinfercase
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
+setlocal nolinebreak
+setlocal nolisp
+setlocal nolist
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
+setlocal modeline
+setlocal modifiable
+setlocal nrformats=octal,hex
+set number
+setlocal number
+setlocal numberwidth=4
+setlocal omnifunc=
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norelativenumber
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=8
+setlocal noshortname
+setlocal nosmartindent
+setlocal softtabstop=0
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=en
+setlocal statusline=
+setlocal suffixesadd=
+setlocal noswapfile
+setlocal synmaxcol=3000
+if &syntax != 'cs'
+setlocal syntax=cs
+endif
+setlocal tabstop=8
+setlocal tags=
+setlocal textwidth=0
+setlocal thesaurus=
+setlocal noundofile
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+silent! normal! zE
+let s:l = 6 - ((1 * winheight(0) + 15) / 31)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+6
+normal! 046l
+wincmd w
+exe '1resize ' . ((&lines * 15 + 16) / 33)
+exe 'vert 1resize ' . ((&columns * 66 + 66) / 133)
+exe '2resize ' . ((&lines * 15 + 16) / 33)
+exe 'vert 2resize ' . ((&columns * 66 + 66) / 133)
+exe 'vert 3resize ' . ((&columns * 66 + 66) / 133)
+tabedit toykit\Toolkit.cs
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+set nosplitbelow
+set nosplitright
+wincmd t
+set winheight=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 67 + 66) / 133)
+exe 'vert 2resize ' . ((&columns * 65 + 66) / 133)
+argglobal
+setlocal keymap=
+setlocal noarabic
+setlocal autoindent
+setlocal balloonexpr=
+setlocal nobinary
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal nocindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+setlocal colorcolumn=
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
+setlocal commentstring=/*%s*/
+setlocal complete=.,w,b,u,t,i
+setlocal concealcursor=
+setlocal conceallevel=0
+setlocal completefunc=
+setlocal nocopyindent
+setlocal cryptmethod=
+setlocal nocursorbind
+setlocal nocursorcolumn
+setlocal nocursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal noexpandtab
+if &filetype != 'cs'
+setlocal filetype=cs
+endif
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=0
+setlocal foldignore=#
+setlocal foldlevel=0
+setlocal foldmarker={{{,}}}
+setlocal foldmethod=manual
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=tcq
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=2
+setlocal imsearch=2
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=
+setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
+setlocal noinfercase
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
+setlocal nolinebreak
+setlocal nolisp
+setlocal nolist
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
+setlocal modeline
+setlocal modifiable
+setlocal nrformats=octal,hex
+set number
+setlocal number
+setlocal numberwidth=4
+setlocal omnifunc=
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norelativenumber
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=8
+setlocal noshortname
+setlocal nosmartindent
+setlocal softtabstop=0
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=en
+setlocal statusline=
+setlocal suffixesadd=
+setlocal noswapfile
+setlocal synmaxcol=3000
+if &syntax != 'cs'
+setlocal syntax=cs
+endif
+setlocal tabstop=8
+setlocal tags=
+setlocal textwidth=0
+setlocal thesaurus=
+setlocal noundofile
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+silent! normal! zE
+let s:l = 76 - ((17 * winheight(0) + 15) / 31)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+76
+normal! 018l
+wincmd w
+argglobal
+edit Model.cs
+setlocal keymap=
+setlocal noarabic
+setlocal autoindent
+setlocal balloonexpr=
+setlocal nobinary
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal nocindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+setlocal colorcolumn=
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
+setlocal commentstring=/*%s*/
+setlocal complete=.,w,b,u,t,i
+setlocal concealcursor=
+setlocal conceallevel=0
+setlocal completefunc=
+setlocal nocopyindent
+setlocal cryptmethod=
+setlocal nocursorbind
+setlocal nocursorcolumn
+setlocal nocursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal noexpandtab
+if &filetype != 'cs'
+setlocal filetype=cs
+endif
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=0
+setlocal foldignore=#
+setlocal foldlevel=0
+setlocal foldmarker={{{,}}}
+setlocal foldmethod=manual
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=tcq
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=2
+setlocal imsearch=2
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=
+setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
+setlocal noinfercase
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
+setlocal nolinebreak
+setlocal nolisp
+setlocal nolist
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
+setlocal modeline
+setlocal modifiable
+setlocal nrformats=octal,hex
+set number
+setlocal nonumber
+setlocal numberwidth=4
+setlocal omnifunc=
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norelativenumber
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=8
+setlocal noshortname
+setlocal nosmartindent
+setlocal softtabstop=0
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=en
+setlocal statusline=
+setlocal suffixesadd=
+setlocal noswapfile
+setlocal synmaxcol=3000
+if &syntax != 'cs'
+setlocal syntax=cs
+endif
+setlocal tabstop=8
+setlocal tags=
+setlocal textwidth=0
+setlocal thesaurus=
+setlocal noundofile
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+silent! normal! zE
+let s:l = 3 - ((2 * winheight(0) + 15) / 31)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+3
+normal! 0
+wincmd w
+exe 'vert 1resize ' . ((&columns * 67 + 66) / 133)
+exe 'vert 2resize ' . ((&columns * 65 + 66) / 133)
+tabedit ..\..\..\anagram\Assets\Scripts\Toolkit.cs
+set splitbelow splitright
+set nosplitbelow
+set nosplitright
+wincmd t
+set winheight=1 winwidth=1
+argglobal
+setlocal keymap=
+setlocal noarabic
+setlocal autoindent
+setlocal balloonexpr=
+setlocal nobinary
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal nocindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+setlocal colorcolumn=
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
+setlocal commentstring=/*%s*/
+setlocal complete=.,w,b,u,t,i
+setlocal concealcursor=
+setlocal conceallevel=0
+setlocal completefunc=
+setlocal nocopyindent
+setlocal cryptmethod=
+setlocal nocursorbind
+setlocal nocursorcolumn
+setlocal nocursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal noexpandtab
+if &filetype != 'cs'
+setlocal filetype=cs
+endif
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=0
+setlocal foldignore=#
+setlocal foldlevel=0
+setlocal foldmarker={{{,}}}
+setlocal foldmethod=manual
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=tcq
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=2
+setlocal imsearch=2
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=
+setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
+setlocal noinfercase
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
+setlocal nolinebreak
+setlocal nolisp
+setlocal nolist
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
+setlocal modeline
+setlocal modifiable
+setlocal nrformats=octal,hex
+set number
+setlocal number
+setlocal numberwidth=4
+setlocal omnifunc=
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norelativenumber
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=8
+setlocal noshortname
+setlocal nosmartindent
+setlocal softtabstop=0
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=en
+setlocal statusline=
+setlocal suffixesadd=
+setlocal noswapfile
+setlocal synmaxcol=3000
+if &syntax != 'cs'
+setlocal syntax=cs
+endif
+setlocal tabstop=8
+setlocal tags=
+setlocal textwidth=0
+setlocal thesaurus=
+setlocal noundofile
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+silent! normal! zE
+let s:l = 34 - ((12 * winheight(0) + 16) / 32)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+34
 normal! 0
 tabnext 2
 if exists('s:wipebuf')
