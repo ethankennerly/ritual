@@ -34,7 +34,7 @@ public class WordGrid
 
 	/**
 	 * List cells to search.  If a word is found, append it.  Search adjacent cells.
-	 * @param	cellLetters	Not handled:  Special case "qu" might be one cell.
+	 * @param	cellLetters	Not handled:  Special case "qu" might be one cell.  Expects each cell leter is not null.
 	 * @return	Longest first down to minimum length.
 	 * Example @see Editor/Tests/TestWordGrid
 	 * References:

@@ -54,7 +54,7 @@ internal class TestWordGrid
 	}
 
 	[Test]
-	public void FindWords()
+	public void FindWordsBackAb()
 	{
 		WordGrid grid = new WordGrid();
 		grid.SetDictionary("ab\nad\nback\ncab");
@@ -65,5 +65,19 @@ internal class TestWordGrid
 		Assert.AreEqual(2, words.Count, ListToString(words));
 		Assert.AreEqual("back", words[0]);
 		Assert.AreEqual("ab", words[1]);
+	}
+
+	[Test]
+	public void FindWordsWishIs()
+	{
+		WordGrid grid = new WordGrid();
+		grid.SetDictionary("is\nwise\nwish");
+		List<string> words = grid.FindWords(
+			new string[]{"w", "i", "s", 
+			 ".", ".", "h"},
+			3, 2, new int[]{0, 1});
+		Assert.AreEqual(2, words.Count, ListToString(words));
+		Assert.AreEqual("wish", words[0]);
+		Assert.AreEqual("is", words[1]);
 	}
 }

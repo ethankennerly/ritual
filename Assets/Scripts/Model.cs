@@ -1,4 +1,4 @@
-using UnityEngine;  // Debug.Log
+using UnityEngine;  // Debug.Log, Mathf
 using System;  // String, StringSplitOptions
 using System.Collections.Generic;  // Dictionary
 
@@ -6,11 +6,13 @@ public class Model
 {
 	public ViewModel view = new ViewModel();
 	public int columnCountMax = 3;
+	public int columnCount = -1;
 	public string invisible = ".";
 	public bool isSelecting;
 	public bool isSwapLettersMode = false;
 	public string message;
 	public int rowCountMax = 5;
+	public int rowCount = -1;
 	public int levelCountMax = 21;
 	public int levelCount;
 	public int tileCountMax = 15;
@@ -43,6 +45,7 @@ public class Model
 	private string[] messages;
 	private Dictionary<string, bool> credits;
 	private Dictionary<string, bool> words;
+	private WordGrid wordGrid;
 	/**
 	 * grid:
 	 *	line
@@ -59,6 +62,10 @@ public class Model
 		string directory = isSwapLettersMode ? "swap" : "spell";
 		creditsText = Toolkit.Read(directory + "/word_credits.txt");
 		wordsText = Toolkit.Read(directory + "/word_list_moby_crossword.flat.txt");
+		if (isSwapLettersMode) {
+			wordGrid = new WordGrid();
+			wordGrid.SetDictionary(wordsText + "\n" + creditsText);
+		}
 		messagesText = Toolkit.Read(directory + "/tutorial_messages.txt");
 		gridNames = new string[]{
 			"tutorial_grids.txt",
@@ -211,6 +218,8 @@ public class Model
 	{
 		gridIndex = newGridIndex % grids.Length;
 		grid = grids[gridIndex];
+		columnCount = columnCountMax;
+		rowCount = grid.Length;
 		// Debug.Log("Model.PopulateGrid: index " + gridIndex + ": " + Join(grid));
 		tileLetters = GetTileLetters(grid);
 		tileSelecteds = new bool[tileCountMax];
@@ -459,15 +468,19 @@ public class Model
 	 * Searching adjacent letters.
 	 * Using a letter only once.
 	 */
-	private void FindWord(int[] firstIndexes)
+	private void FindLongestWord(int[] firstIndexes)
 	{
+		List<string> words = wordGrid.FindWords(tileLetters, columnCount, rowCount, firstIndexes);
+		if (1 <= words.Count) {
+			Debug.Log("FindLongestWord: " + words[0]);
+		}
 	}
 
 	private void Submit()
 	{
 		if (isSwapLettersMode) {
 			if (SwapLetters(swapIndexes)) {
-				FindWord(swapIndexes);
+				FindLongestWord(swapIndexes);
 			}
 			SelectAll(false);
 		}
