@@ -74,7 +74,7 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +1 \archive\unity\ritual\session.vim
+badd +10 \archive\unity\ritual\session.vim
 badd +1 \archive\unity\ritual\design.txt
 badd +18 MainView.cs
 badd +1 \archive\unity\fit\Assets\Scripts\MainView.cs
@@ -115,10 +115,11 @@ badd +40 \archive\unity\ritual\Assets\Data\charm_grids.txt
 badd +36 \archive\unity\ritual\Assets\Data\banishing_grids.txt
 badd +62 \archive\unity\ritual\Assets\Data\skill_grids.txt
 badd +12 ..\Data\names.txt
-badd +0 WordGrid.cs
-badd +43 ..\Editor\Tests\TestWordGrid.cs
-badd +0 toykit\Toolkit.cs
-badd +0 ..\..\..\anagram\Assets\Scripts\Toolkit.cs
+badd +1 WordGrid.cs
+badd +1 ..\Editor\Tests\TestWordGrid.cs
+badd +74 toykit\Toolkit.cs
+badd +1 ..\..\..\anagram\Assets\Scripts\Toolkit.cs
+badd +0 ..\Editor\Tests\TestModel.cs
 silent! argdel *
 edit \archive\unity\ritual\design.txt
 set splitbelow splitright
@@ -234,7 +235,7 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 48 - ((23 * winheight(0) + 15) / 31)
+let s:l = 48 - ((24 * winheight(0) + 16) / 32)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -344,7 +345,7 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 99 - ((0 * winheight(0) + 15) / 31)
+let s:l = 99 - ((0 * winheight(0) + 16) / 32)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -353,7 +354,7 @@ normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 67 + 66) / 133)
 exe 'vert 2resize ' . ((&columns * 65 + 66) / 133)
-tabedit toykit\Toolkit.cs
+tabedit ..\Editor\Tests\TestModel.cs
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -475,12 +476,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 77 - ((5 * winheight(0) + 7) / 15)
+let s:l = 20 - ((5 * winheight(0) + 7) / 15)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-77
-normal! 047l
+20
+normal! 024l
 wincmd w
 argglobal
 edit ..\Editor\Tests\TestWordGrid.cs
@@ -586,12 +587,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 43 - ((7 * winheight(0) + 7) / 15)
+let s:l = 11 - ((0 * winheight(0) + 7) / 15)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-43
-normal! 02l
+11
+normal! 0
 wincmd w
 argglobal
 edit WordGrid.cs
@@ -697,19 +698,20 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 6 - ((1 * winheight(0) + 15) / 31)
+let s:l = 60 - ((11 * winheight(0) + 15) / 31)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-6
-normal! 046l
+60
+normal! 041l
 wincmd w
+2wincmd w
 exe '1resize ' . ((&lines * 15 + 16) / 33)
 exe 'vert 1resize ' . ((&columns * 66 + 66) / 133)
 exe '2resize ' . ((&lines * 15 + 16) / 33)
 exe 'vert 2resize ' . ((&columns * 66 + 66) / 133)
 exe 'vert 3resize ' . ((&columns * 66 + 66) / 133)
-tabedit toykit\Toolkit.cs
+tabedit ..\Editor\Tests\TestModel.cs
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -824,12 +826,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 76 - ((17 * winheight(0) + 15) / 31)
+let s:l = 15 - ((5 * winheight(0) + 15) / 31)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-76
-normal! 018l
+15
+normal! 0
 wincmd w
 argglobal
 edit Model.cs
@@ -935,13 +937,14 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 3 - ((2 * winheight(0) + 15) / 31)
+let s:l = 219 - ((27 * winheight(0) + 15) / 31)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-3
-normal! 0
+219
+normal! 02l
 wincmd w
+2wincmd w
 exe 'vert 1resize ' . ((&columns * 67 + 66) / 133)
 exe 'vert 2resize ' . ((&columns * 65 + 66) / 133)
 tabedit ..\..\..\anagram\Assets\Scripts\Toolkit.cs
@@ -1059,6 +1062,7 @@ exe s:l
 normal! zt
 34
 normal! 0
+2wincmd w
 tabnext 2
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf

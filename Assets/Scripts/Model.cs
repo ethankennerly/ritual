@@ -448,18 +448,21 @@ public class Model
 		}
 	}
 
-	private bool SwapLetters(int[] swapIndexes)
+	/**
+	 * Example @see TestModel
+	 */
+	public bool SwapLetters(int[] swapIndexes)
 	{
-		if (!(tileSelecteds[swapIndexes[0]]
-		&& tileSelecteds[swapIndexes[1]])) {
-			return false;
+		int a = swapIndexes[0];
+		int b = swapIndexes[1];
+		bool isSwap = 0 <= a && 0 <= b
+			&& tileSelecteds[a] && tileSelecteds[b];
+		if (isSwap) {
+			string letter = tileLetters[a];
+			tileLetters[a] = tileLetters[b];
+			tileLetters[b] = letter;
 		}
-		else {
-			string letter = tileLetters[swapIndexes[0]];
-			tileLetters[swapIndexes[0]] = tileLetters[swapIndexes[1]];
-			tileLetters[swapIndexes[1]] = letter;
-			return true;
-		}
+		return isSwap;
 	}
 
 	/**
