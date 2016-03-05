@@ -9,6 +9,7 @@ public class WordGrid
 {
 	public CharToDictionary prefixes;
 	public int minimumLength = 1;
+	public char endOfWord = ';';
 
 	/**
 	 * Construct prefix tree from list of words, one per line.
@@ -29,6 +30,7 @@ public class WordGrid
 				}
 				parent = parent[letter];
 			}
+			parent[endOfWord] = new CharToDictionary();
 		}
 	}
 

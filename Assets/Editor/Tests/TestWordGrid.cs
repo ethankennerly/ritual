@@ -25,35 +25,47 @@ internal class TestWordGrid
 
 	public static string ListToString<T>(List<T> aList)
 	{
-		string text = "[" + aList[0];
-		for (int index = 1; index < aList.Count; index++) {
-			text += ", " + aList[index];
+		string text;
+		if (aList.Count <= 0) {
+			text = "[]";
 		}
-		text += "]";
+		else {
+			text = "[" + aList[0];
+			for (int index = 1; index < aList.Count; index++) {
+				text += ", " + aList[index];
+			}
+			text += "]";
+		}
 		return text;
 	}
-	
+
+	public static void AssertCount<TKey, TValue>(int expectedCount, IDictionary<TKey, TValue> hash) {
+		Assert.AreEqual(expectedCount, hash.Count, ToDebugString(hash));
+	}
+
 	[Test]
 	public void SetDictionary()
 	{
 		WordGrid grid = new WordGrid();
-		grid.SetDictionary("ab\nad\nback\ncab");
-		Assert.AreEqual(3, grid.prefixes.Count, 
-			ToDebugString(grid.prefixes));
-		Assert.AreEqual(2, grid.prefixes['a'].Count);
-		Assert.AreEqual(0, grid.prefixes['a']['b'].Count);
-		Assert.AreEqual(0, grid.prefixes['a']['d'].Count);
-		Assert.AreEqual(1, grid.prefixes['b'].Count);
-		Assert.AreEqual(1, grid.prefixes['b']['a'].Count);
-		Assert.AreEqual(1, grid.prefixes['b']['a']['c'].Count);
-		Assert.AreEqual(0, grid.prefixes['b']['a']['c']['k'].Count);
-		Assert.AreEqual(1, grid.prefixes['c'].Count);
-		Assert.AreEqual(1, grid.prefixes['c']['a'].Count);
-		Assert.AreEqual(0, grid.prefixes['c']['a']['b'].Count);
+		grid.SetDictionary("ab\nabs\nad\nback\ncab");
+		AssertCount(3, grid.prefixes);
+		AssertCount(2, grid.prefixes['a']);
+		AssertCount(2, grid.prefixes['a']['b']);
+		AssertCount(0, grid.prefixes['a']['b'][grid.endOfWord]);
+		AssertCount(0, grid.prefixes['a']['b']['s'][grid.endOfWord]);
+		AssertCount(1, grid.prefixes['a']['d']);
+		AssertCount(0, grid.prefixes['a']['d'][grid.endOfWord]);
+		AssertCount(1, grid.prefixes['b']);
+		AssertCount(1, grid.prefixes['b']['a']);
+		AssertCount(1, grid.prefixes['b']['a']['c']);
+		AssertCount(0, grid.prefixes['b']['a']['c']['k'][grid.endOfWord]);
+		AssertCount(1, grid.prefixes['c']);
+		AssertCount(1, grid.prefixes['c']['a']);
+		AssertCount(0, grid.prefixes['c']['a']['b'][grid.endOfWord]);
 	}
 
 	[Test]
-	public void FindWordsBackAb()
+	public void FindWordsWhole()
 	{
 		WordGrid grid = new WordGrid();
 		grid.SetDictionary("ab\nad\nback\ncab");
@@ -68,27 +80,34 @@ internal class TestWordGrid
 	}
 
 	[Test]
-	public void FindWordsWishIs()
+	public void FindWordsSuffixes()
 	{
 		WordGrid grid = new WordGrid();
-		grid.SetDictionary("IS\nWISE\nWISH\nWISHES");
-		int[][] orders = new int[][]{
-			new int[]{0, 1},
-			new int[]{1, 0},
-			new int[]{1, 0},
-			new int[]{0, 1},
-			new int[]{0, 1}
-		};
-		for (int order = 0; order < orders.Length; order++) {
-			List<string> words = grid.FindWords(
-				new string[]{
-				 "W", "I", "S", 
-				 ".", ".", "H",
-				 null, null, null},
-				3, 2, orders[order]);
-			Assert.AreEqual(2, words.Count, ListToString(words) + " orders " + order);
-			Assert.AreEqual("WISH", words[0]);
-			Assert.AreEqual("IS", words[1]);
-		}
+		grid.SetDictionary("HI\nHIS\nIS\nWISE\nWISH\nWISHES");
+		string[] cellLetters = new string[]{
+			 "W", "I", "S", 
+			 ".", ".", "H",
+			 null, null, null};
+		List<string> words;
+
+		words = grid.FindWords(
+			cellLetters,
+			3, 2, new int[]{0});
+		Assert.AreEqual(1, words.Count, ListToString(words));
+		Assert.AreEqual("WISH", words[0]);
+
+		words = grid.FindWords(
+			cellLetters,
+			3, 2, new int[]{1});
+		Assert.AreEqual(1, words.Count, ListToString(words));
+		Assert.AreEqual("IS", words[0]);
+
+		words = grid.FindWords(
+			cellLetters,
+			3, 2, new int[]{5});
+		Assert.AreEqual(2, words.Count, ListToString(words));
+		Assert.AreEqual("HIS", words[0]);
+		Assert.AreEqual("HI", words[1]);
+
 	}
 }
