@@ -58,7 +58,8 @@ internal class TestWordGrid
 		WordGrid grid = new WordGrid();
 		grid.SetDictionary("ab\nad\nback\ncab");
 		List<string> words = grid.FindWords(
-			new string[]{"c", "b", ".", 
+			new string[]{
+			 "c", "b", ".", 
 			 "a", "k", "."},
 			3, 2, new int[]{3, 1});
 		Assert.AreEqual(2, words.Count, ListToString(words));
@@ -70,13 +71,24 @@ internal class TestWordGrid
 	public void FindWordsWishIs()
 	{
 		WordGrid grid = new WordGrid();
-		grid.SetDictionary("is\nwise\nwish");
-		List<string> words = grid.FindWords(
-			new string[]{"w", "i", "s", 
-			 ".", ".", "h"},
-			3, 2, new int[]{0, 1});
-		Assert.AreEqual(2, words.Count, ListToString(words));
-		Assert.AreEqual("wish", words[0]);
-		Assert.AreEqual("is", words[1]);
+		grid.SetDictionary("IS\nWISE\nWISH\nWISHES");
+		int[][] orders = new int[][]{
+			new int[]{0, 1},
+			new int[]{1, 0},
+			new int[]{1, 0},
+			new int[]{0, 1},
+			new int[]{0, 1}
+		};
+		for (int order = 0; order < orders.Length; order++) {
+			List<string> words = grid.FindWords(
+				new string[]{
+				 "W", "I", "S", 
+				 ".", ".", "H",
+				 null, null, null},
+				3, 2, orders[order]);
+			Assert.AreEqual(2, words.Count, ListToString(words) + " orders " + order);
+			Assert.AreEqual("WISH", words[0]);
+			Assert.AreEqual("IS", words[1]);
+		}
 	}
 }
