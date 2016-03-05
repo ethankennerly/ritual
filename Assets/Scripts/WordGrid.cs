@@ -10,6 +10,10 @@ public class WordGrid
 	public CharToDictionary prefixes;
 	public int minimumLength = 1;
 	public char endOfWord = ';';
+	public string[] cellLetters;
+	public int columnCount;
+	public int rowCount;
+	private int cellCount;
 
 	/**
 	 * Construct prefix tree from list of words, one per line.
@@ -34,6 +38,16 @@ public class WordGrid
 		}
 	}
 
+	public void SetSize(int columns, int rows)
+	{
+		columnCount = columns;
+		rowCount = rows;
+	}
+
+	private void Extending(List<string> words, List<int> path)
+	{
+	}
+
 	/**
 	 * List cells to search.  If a word is found, append it.  Search adjacent cells.
 	 * @param	cellLetters	Not handled:  Special case "qu" might be one cell.  Expects each cell leter is not null.
@@ -43,7 +57,7 @@ public class WordGrid
 	 * http://exceptional-code.blogspot.com/2012/02/solving-boggle-game-recursion-prefix.html
 	 * http://stackoverflow.com/questions/746082/how-to-find-list-of-possible-words-from-a-letter-matrix-boggle-solver
 	 */
-	public List<string> FindWords(string[] cellLetters, int columnCount, int rowCount, int startCell)
+	public List<string> FindWords(int startCell)
 	{
 		List<string> words = new List<string>();
 		List<int> searchCells = new List<int>();
@@ -57,7 +71,7 @@ public class WordGrid
 			columnCount - 1,
 			columnCount + 1
 		};
-		int cellCount = columnCount * rowCount;
+		cellCount = columnCount * rowCount;
 		searchCells.Add(startCell);
 		CharToDictionary parent = prefixes;
 		bool[] isVisits = new bool[cellLetters.Length];
@@ -73,7 +87,7 @@ public class WordGrid
 				for (int offsetIndex = 0; offsetIndex < offsets.Length; offsetIndex++) {
 					int adjacent = searchCell + offsets[offsetIndex];
 					if (0 <= adjacent && adjacent < cellCount) {
-						if (!isVisits[adjacent]) {
+						if (null != cellLetters[adjacent] && !isVisits[adjacent]) {
 							searchCells.Add(adjacent);
 						}
 					}
@@ -103,15 +117,13 @@ public class WordGrid
 	 * If none found, return "".
 	 * Example @see TestWordGrid
 	 */
-	public string FindLongestWord(string[] cellLetters, int columnCount, 
-		int rowCount, int[] startCells)
+	public string FindLongestWord(int[] startCells)
 	{
 		string word = "";
 		for (int index = 0; index < startCells.Length; index++) {
-			List<string> words = FindWords(cellLetters, 
-				columnCount, rowCount, startCells[index]);
+			List<string> words = FindWords(startCells[index]);
 			if (1 <= words.Count) {
-				if (word.Length <= words[0].Length) {
+				if (word.Length < words[0].Length) {
 					word = words[0];
 				}
 			}

@@ -469,8 +469,9 @@ public class Model
 	{
 		if (isSwapLettersMode) {
 			if (SwapLetters(swapIndexes)) {
-				string word = wordGrid.FindLongestWord(tileLetters,
-					columnCount, rowCount, swapIndexes);
+				wordGrid.cellLetters = tileLetters;
+				wordGrid.SetSize(columnCount, rowCount);
+				string word = wordGrid.FindLongestWord(swapIndexes);
 				Debug.Log("Submit.FindLongestWord: <" + word + ">");
 			}
 			SelectAll(false);

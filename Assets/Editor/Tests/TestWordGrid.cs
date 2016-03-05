@@ -69,75 +69,94 @@ internal class TestWordGrid
 	{
 		WordGrid grid = new WordGrid();
 		grid.SetDictionary("ab\nad\nback\ncab");
-		string[] cellLetters = new string[]{
+		grid.cellLetters = new string[]{
 			 "c", "b", ".", 
 			 "a", "k", "."};
+		grid.SetSize(3, 2);
 		List<string> words;
-		words = grid.FindWords(cellLetters, 3, 2, 1);
+		words = grid.FindWords(1);
 		Assert.AreEqual(1, words.Count, ListToString(words));
 		Assert.AreEqual("back", words[0]);
-		words = grid.FindWords(cellLetters, 3, 2, 3);
+		words = grid.FindWords(3);
 		Assert.AreEqual(1, words.Count, ListToString(words));
 		Assert.AreEqual("ab", words[0]);
+	}
+
+	private WordGrid SetupWishGrid()
+	{
+		WordGrid grid = new WordGrid();
+		grid.SetDictionary("HI\nHIS\nIS\nWISE\nWISH\nWISHES");
+		grid.cellLetters = new string[]{
+			 "W", "I", "S", 
+			 ".", ".", "H",
+			 null, null, null};
+		grid.SetSize(3, 3);
+		return grid;
 	}
 
 	[Test]
 	public void FindWordsSuffixes()
 	{
-		WordGrid grid = new WordGrid();
-		grid.SetDictionary("HI\nHIS\nIS\nWISE\nWISH\nWISHES");
-		string[] cellLetters = new string[]{
-			 "W", "I", "S", 
-			 ".", ".", "H",
-			 null, null, null};
+		WordGrid grid = SetupWishGrid();
 		List<string> words;
 
-		words = grid.FindWords(cellLetters, 3, 2, 0);
+		words = grid.FindWords(0);
 		Assert.AreEqual(1, words.Count, ListToString(words));
 		Assert.AreEqual("WISH", words[0]);
 
-		words = grid.FindWords(cellLetters, 3, 2, 1);
+		words = grid.FindWords(1);
 		Assert.AreEqual(1, words.Count, ListToString(words));
 		Assert.AreEqual("IS", words[0]);
 
-		words = grid.FindWords(cellLetters, 3, 2, 5);
+		words = grid.FindWords(5);
 		Assert.AreEqual(2, words.Count, ListToString(words));
 		Assert.AreEqual("HIS", words[0]);
 		Assert.AreEqual("HI", words[1]);
 	}
 
 	[Test]
-	public void FindLongestWord()
+	public void FindWordsSnake()
 	{
 		WordGrid grid = new WordGrid();
-		grid.SetDictionary("HI\nHIS\nIS\nWISE\nWISH\nWISHES");
-		string[] cellLetters = new string[]{
-			 "W", "I", "S", 
-			 ".", ".", "H",
+		grid.SetDictionary(
+		 "AT\nACTION\nAFT\nAFFECTS\nAFFECTIONATE\nAFFECTIONATELY");
+		grid.cellLetters = new string[]{
+			 "A", "F", "F", 
+			 "T", "C", "E",
+			 "I", "A", "T",
+			 "O", "N", "E",
 			 null, null, null};
+		grid.SetSize(3, 5);
+		List<string> words;
+
+		words = grid.FindWords(0);
+		Assert.AreEqual(5, words.Count, ListToString(words));
+		Assert.AreEqual("AFFECTIONATE", words[0]);
+		Assert.AreEqual("AFFECTS", words[1]);
+		Assert.AreEqual("ACTION", words[2]);
+		Assert.AreEqual("AFT", words[3]);
+		Assert.AreEqual("AT", words[4]);
+	}
+
+	[Test]
+	public void FindLongestWord()
+	{
+		WordGrid grid = SetupWishGrid();
 		Assert.AreEqual("WISH", 
-			grid.FindLongestWord(cellLetters, 3, 2,
-				new int[]{0, 1}));
+			grid.FindLongestWord(new int[]{0, 1}));
 		Assert.AreEqual("HIS", 
-			grid.FindLongestWord(cellLetters, 3, 2,
-				new int[]{1, 5}));
+			grid.FindLongestWord(new int[]{1, 5}));
 		Assert.AreEqual("HIS", 
-			grid.FindLongestWord(cellLetters, 3, 2,
-				new int[]{5, 1}));
+			grid.FindLongestWord(new int[]{5, 1}));
 		Assert.AreEqual("WISH", 
-			grid.FindLongestWord(cellLetters, 3, 2,
-				new int[]{1, 0}));
+			grid.FindLongestWord(new int[]{1, 0}));
 		Assert.AreEqual("", 
-			grid.FindLongestWord(cellLetters, 3, 2,
-				new int[]{2, 3}));
+			grid.FindLongestWord(new int[]{2, 3}));
 		Assert.AreEqual("WISH", 
-			grid.FindLongestWord(cellLetters, 3, 2,
-				new int[]{0, 0}));
+			grid.FindLongestWord(new int[]{0, 0}));
 		Assert.AreEqual("WISH", 
-			grid.FindLongestWord(cellLetters, 3, 2,
-				new int[]{2, 0, 1}));
+			grid.FindLongestWord(new int[]{2, 0, 1}));
 		Assert.AreEqual("", 
-			grid.FindLongestWord(cellLetters, 3, 2,
-				new int[]{}));
+			grid.FindLongestWord(new int[]{}));
 	}
 }
