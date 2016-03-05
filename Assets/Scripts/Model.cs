@@ -178,7 +178,7 @@ public class Model
 			}
 			wishMessages[name] = messages;
 		}
-		Debug.Log("Model.LoadAllWishes: " + gridsTotal + " grids");
+		// Debug.Log("Model.LoadAllWishes: " + gridsTotal + " grids");
 		gridsComplete = 0;
 		formatGridsComplete();
 
@@ -465,25 +465,13 @@ public class Model
 		return isSwap;
 	}
 
-	/**
-	 * Starting with one of the indexes.
-	 * Like Boggle:
-	 * Searching adjacent letters.
-	 * Using a letter only once.
-	 */
-	private void FindLongestWord(int[] firstIndexes)
-	{
-		List<string> words = wordGrid.FindWords(tileLetters, columnCount, rowCount, firstIndexes);
-		if (1 <= words.Count) {
-			Debug.Log("FindLongestWord: " + words[0]);
-		}
-	}
-
 	private void Submit()
 	{
 		if (isSwapLettersMode) {
 			if (SwapLetters(swapIndexes)) {
-				FindLongestWord(swapIndexes);
+				string word = wordGrid.FindLongestWord(tileLetters,
+					columnCount, rowCount, swapIndexes);
+				Debug.Log("Submit.FindLongestWord: <" + word + ">");
 			}
 			SelectAll(false);
 		}

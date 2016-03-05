@@ -43,7 +43,7 @@ public class WordGrid
 	 * http://exceptional-code.blogspot.com/2012/02/solving-boggle-game-recursion-prefix.html
 	 * http://stackoverflow.com/questions/746082/how-to-find-list-of-possible-words-from-a-letter-matrix-boggle-solver
 	 */
-	public List<string> FindWords(string[] cellLetters, int columnCount, int rowCount, int[] startCells)
+	public List<string> FindWords(string[] cellLetters, int columnCount, int rowCount, int startCell)
 	{
 		List<string> words = new List<string>();
 		List<int> searchCells = new List<int>();
@@ -58,43 +58,64 @@ public class WordGrid
 			columnCount + 1
 		};
 		int cellCount = columnCount * rowCount;
-		for (int startIndex = 0; startIndex < startCells.Length; startIndex++) {
-			int startCell = startCells[startIndex];
-			searchCells.Add(startCell);
-			CharToDictionary parent = prefixes;
-			bool[] isVisits = new bool[cellLetters.Length];
-			string word = "";
-			while (1 <= searchCells.Count) {
-				int searchCell = searchCells[0];
-				searchCells.Remove(searchCell);
-				char letter = cellLetters[searchCell][0];
-				if (!isVisits[searchCell] && parent.ContainsKey(letter)) {
-					isVisits[searchCell] = true;
-					parent = parent[letter];
-					word += letter;
-					for (int offsetIndex = 0; offsetIndex < offsets.Length; offsetIndex++) {
-						int adjacent = searchCell + offsets[offsetIndex];
-						if (0 <= adjacent && adjacent < cellCount) {
-							if (!isVisits[adjacent]) {
-								searchCells.Add(adjacent);
-							}
+		searchCells.Add(startCell);
+		CharToDictionary parent = prefixes;
+		bool[] isVisits = new bool[cellLetters.Length];
+		string word = "";
+		while (1 <= searchCells.Count) {
+			int searchCell = searchCells[0];
+			searchCells.Remove(searchCell);
+			char letter = cellLetters[searchCell][0];
+			if (!isVisits[searchCell] && parent.ContainsKey(letter)) {
+				isVisits[searchCell] = true;
+				parent = parent[letter];
+				word += letter;
+				for (int offsetIndex = 0; offsetIndex < offsets.Length; offsetIndex++) {
+					int adjacent = searchCell + offsets[offsetIndex];
+					if (0 <= adjacent && adjacent < cellCount) {
+						if (!isVisits[adjacent]) {
+							searchCells.Add(adjacent);
 						}
 					}
-
 				}
-				if (0 == parent.Count && minimumLength <= word.Length) {
-					if (words.IndexOf(word) <= -1) {
-						int wordIndex;
-						for (wordIndex = 0; wordIndex < words.Count; wordIndex++) {
-							if (words[wordIndex].Length < word.Length) {
-								break;
-							}
+
+			}
+			if (parent.ContainsKey(endOfWord) && minimumLength <= word.Length) {
+				if (words.IndexOf(word) <= -1) {
+					int wordIndex;
+					for (wordIndex = 0; wordIndex < words.Count; wordIndex++) {
+						if (words[wordIndex].Length < word.Length) {
+							break;
 						}
-						words.Insert(wordIndex, word);
 					}
+					words.Insert(wordIndex, word);
 				}
 			}
 		}
 		return words;
+	}
+
+	/**
+	 * Starting with one of the indexes.
+	 * Like Boggle:
+	 * Searching adjacent letters.
+	 * Using a letter only once.
+	 * If none found, return "".
+	 * Example @see TestWordGrid
+	 */
+	public string FindLongestWord(string[] cellLetters, int columnCount, 
+		int rowCount, int[] startCells)
+	{
+		string word = "";
+		for (int index = 0; index < startCells.Length; index++) {
+			List<string> words = FindWords(cellLetters, 
+				columnCount, rowCount, startCells[index]);
+			if (1 <= words.Count) {
+				if (word.Length <= words[0].Length) {
+					word = words[0];
+				}
+			}
+		}
+		return word;
 	}
 }
