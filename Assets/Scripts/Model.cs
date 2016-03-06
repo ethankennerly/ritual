@@ -1,6 +1,6 @@
 using UnityEngine;  // Debug.Log, Mathf
 using System;  // String, StringSplitOptions
-using System.Collections.Generic;  // Dictionary
+using System.Collections.Generic;  // Dictionary, List
 
 public class Model
 {
@@ -309,6 +309,20 @@ public class Model
 		}
 	}
 
+	public void RemovePath(List<int> path)
+	{
+		for (int step = 0; step < path.Count; step++)
+		{
+			int tileIndex = path[step];
+			bool isSelected = tileSelecteds[tileIndex];
+			if (isSelected)
+			{
+				tileSelecteds[tileIndex] = false;
+			}
+			tileLetters[tileIndex] = invisible;
+		}
+	}
+
 	public string OnMouseDown(string tileName)
 	{
 		stateNext = null;
@@ -472,7 +486,8 @@ public class Model
 				wordGrid.cellLetters = tileLetters;
 				wordGrid.SetSize(columnCount, rowCount);
 				string word = wordGrid.FindLongestWord(swapIndexes);
-				Debug.Log("Submit.FindLongestWord: <" + word + ">");
+				message = word;
+				RemovePath(wordGrid.wordPaths[word]);
 			}
 			SelectAll(false);
 		}

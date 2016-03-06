@@ -15,6 +15,22 @@ using NUnit.Framework;
 internal class TestModel
 {
 	[Test]
+	public void RemovePath()
+	{
+		Model model = new Model();
+		model.tileLetters = new string[]{
+			 "W", "I", "S", 
+			 ".", ".", "H",
+			 null, null, null};
+		model.tileSelecteds = new bool[model.tileCountMax];
+		model.RemovePath(new List<int>(){5, 1, 2});
+		Assert.AreEqual(model.invisible, model.tileLetters[2]);
+		Assert.AreEqual(model.invisible, model.tileLetters[5]);
+		Assert.AreEqual(model.invisible, model.tileLetters[1]);
+		model.RemovePath(new List<int>(){});
+	}
+
+	[Test]
 	public void SwapLetters()
 	{
 		Model model = new Model();

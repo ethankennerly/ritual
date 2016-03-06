@@ -161,4 +161,17 @@ internal class TestWordGrid
 		Assert.AreEqual("", 
 			grid.FindLongestWord(new int[]{}));
 	}
+
+	[Test]
+	public void FindWordsPath()
+	{
+		WordGrid grid = SetupWishGrid();
+		List<string> words;
+
+		words = grid.FindWords(0);
+		Assert.AreEqual(1, words.Count, ListToString(words));
+		Assert.AreEqual("WISH", words[0]);
+		Assert.AreEqual(new List<int>(){0, 1, 2, 5},
+			grid.wordPaths["WISH"]);
+	}
 }

@@ -13,6 +13,8 @@ public class WordGrid
 	public string[] cellLetters;
 	public int columnCount;
 	public int rowCount;
+	public Dictionary<string, List<int>> wordPaths = new Dictionary<
+		string, List<int>>();
 	private int cellCount;
 	private int[] offsets;
 
@@ -57,22 +59,27 @@ public class WordGrid
 	}
 
 	/**
-	 * Like Darius Bacon's without coroutines; more portable.
+	 * Side-effect:  set wordPaths[word] to path of the word.
+	 *
+	 * Like Darius Bacon's without coroutines or nested return type.
+	 * More portable.
 	 * http://stackoverflow.com/questions/746082/how-to-find-list-of-possible-words-from-a-letter-matrix-boggle-solver
 	 */
 	private void ExtendWords(List<string> words, List<int> path, 
 				CharToDictionary parent, string word)
 	{
-		if (parent.ContainsKey(endOfWord) && minimumLength <= word.Length) {
-			if (words.IndexOf(word) <= -1) {
-				int wordIndex;
-				for (wordIndex = 0; wordIndex < words.Count; wordIndex++) {
-					if (words[wordIndex].Length < word.Length) {
-						break;
-					}
+		if (parent.ContainsKey(endOfWord) 
+		&& minimumLength <= word.Length
+		&& words.IndexOf(word) <= -1) {
+			int wordIndex;
+			for (wordIndex = 0; wordIndex < words.Count; 
+					wordIndex++) {
+				if (words[wordIndex].Length < word.Length) {
+					break;
 				}
-				words.Insert(wordIndex, word);
 			}
+			words.Insert(wordIndex, word);
+			wordPaths[word] = path;
 		}
 		int cell = path[path.Count - 1];
 		for (int offsetIndex = 0; offsetIndex < offsets.Length; 
@@ -107,8 +114,8 @@ public class WordGrid
 	 * @return	Longest first down to minimum length.
 	 * Example @see Editor/Tests/TestWordGrid
 	 * References:
-	 * http://exceptional-code.blogspot.com/2012/02/solving-boggle-game-recursion-prefix.html
 	 * http://stackoverflow.com/questions/746082/how-to-find-list-of-possible-words-from-a-letter-matrix-boggle-solver
+	 * http://exceptional-code.blogspot.com/2012/02/solving-boggle-game-recursion-prefix.html
 	 */
 	public List<string> FindWords(int startCell)
 	{
