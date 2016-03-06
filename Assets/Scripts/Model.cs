@@ -420,19 +420,6 @@ public class Model
 		if (IsWord(submission))
 		{
 			RemoveSelected();
-			if (IsEmpty())
-			{
-				SetComplete(gridIndex);
-				++gridIndex;
-				if (gridIndex < levelCount)
-				{
-					PopulateGrid(gridIndex);
-				}
-				else
-				{
-					stateNext = "wishes";
-				}
-			}
 		}
 		else
 		{
@@ -486,13 +473,28 @@ public class Model
 				wordGrid.cellLetters = tileLetters;
 				wordGrid.SetSize(columnCount, rowCount);
 				string word = wordGrid.FindLongestWord(swapIndexes);
-				message = word;
-				RemovePath(wordGrid.wordPaths[word]);
+				if ("" != word) {
+					message = word;
+					RemovePath(wordGrid.wordPaths[word]);
+				}
 			}
 			SelectAll(false);
 		}
 		else {
 			SubmitWord();
+		}
+		if (IsEmpty())
+		{
+			SetComplete(gridIndex);
+			++gridIndex;
+			if (gridIndex < levelCount)
+			{
+				PopulateGrid(gridIndex);
+			}
+			else
+			{
+				stateNext = "wishes";
+			}
 		}
 		submission = "";
 	}
