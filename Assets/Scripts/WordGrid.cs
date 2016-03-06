@@ -1,4 +1,5 @@
 using System.Collections.Generic;  // List
+using System;  // String
 
 /**
  * http://stackoverflow.com/questions/647533/recursive-generic-types
@@ -149,5 +150,24 @@ public class WordGrid
 			}
 		}
 		return word;
+	}
+
+	/**
+	 * Longest set of words with non-overlapping paths
+	 * that start at these cells.
+	 */
+	public string FindLongestSet(int[] startCells)
+	{
+		string message = "";
+		if (1 <= startCells.Length) {
+			List<string> words;
+			List<string>[] lists = new List<string>[startCells.Length];
+			for (int index = 0; index < startCells.Length; index++) {
+				lists[index] = FindWords(startCells[index]);
+				words = lists[index];
+				message = string.Join(", ", words.ToArray());
+			}
+		}
+		return message;
 	}
 }

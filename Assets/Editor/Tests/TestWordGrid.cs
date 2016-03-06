@@ -174,4 +174,25 @@ internal class TestWordGrid
 		Assert.AreEqual(new List<int>(){0, 1, 2, 5},
 			grid.wordPaths["WISH"]);
 	}
+
+	[Test]
+	public void FindLongestSet()
+	{
+		WordGrid grid = new WordGrid();
+		grid.SetDictionary(
+		 "MAGIC\nSCAMPI\nSPELL");
+		grid.cellLetters = new string[]{
+			 ".", "A", "G", 
+			 "M", "C", "I",
+			 "S", "P", "E",
+			 ".", "L", "L",
+			 null, null, null};
+		grid.SetSize(3, 5);
+		Assert.AreEqual("", 
+			grid.FindLongestSet(new int[]{}));
+		Assert.AreEqual("MAGIC, SPELL", 
+			grid.FindLongestSet(new int[]{3, 6}));
+		Assert.AreEqual(new List<int>(){3, 1, 2, 5, 4, 6, 7, 8, 11, 10},
+			grid.wordPaths["MAGIC, SPELL"]);
+	}
 }

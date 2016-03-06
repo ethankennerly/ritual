@@ -34,8 +34,6 @@ FEATURES
 	Healing level theme.
 	Relaxation level theme.
 	Charm level theme.
-
-TODO
 	Experiment with swap two letters to connect words.
 		Stub is swap letters mode.
 		Load levels for swap letters mode.
@@ -45,9 +43,12 @@ TODO
 		After swap, find a word connect to letter.
 			http://exceptional-code.blogspot.com/2012/02/solving-boggle-game-recursion-prefix.html
 			http://stackoverflow.com/questions/746082/how-to-find-list-of-possible-words-from-a-letter-matrix-boggle-solver
-		TODO
 		Recall path of longest word.
 		Letters in path of longest word.
+
+TODO
+		Jennifer Russ sees words out of order.
+		Jennifer removes longest of 2 exclusive paths.
 	Integrate toykit.
 	Luck level theme.
 	Power level theme.
