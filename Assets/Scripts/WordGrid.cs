@@ -60,7 +60,7 @@ public class WordGrid
 	 * Like Darius Bacon's without coroutines; more portable.
 	 * http://stackoverflow.com/questions/746082/how-to-find-list-of-possible-words-from-a-letter-matrix-boggle-solver
 	 */
-	private void ExtendWords(List<string> words, List<int> searchCells, 
+	private void ExtendWords(List<string> words, List<int> path, 
 				CharToDictionary parent, string word)
 	{
 		if (parent.ContainsKey(endOfWord) && minimumLength <= word.Length) {
@@ -74,14 +74,22 @@ public class WordGrid
 				words.Insert(wordIndex, word);
 			}
 		}
-		int searchCell = searchCells[searchCells.Count - 1];
-		for (int offsetIndex = 0; offsetIndex < offsets.Length; offsetIndex++) {
-			int adjacent = searchCell + offsets[offsetIndex];
-			if (0 <= adjacent && adjacent < cellCount) {
-				if (null != cellLetters[adjacent] && !searchCells.Contains(adjacent)) {
-					char letter = cellLetters[adjacent][0];
+		int cell = path[path.Count - 1];
+		for (int offsetIndex = 0; offsetIndex < offsets.Length; 
+				offsetIndex++) {
+			int adjacent = cell + offsets[offsetIndex];
+			int columnOffset = ((cell % columnCount) - 
+				(adjacent % columnCount));
+			if (0 <= adjacent && adjacent < cellCount
+			&& -1 <= columnOffset && columnOffset <= 1) {
+				if (null != cellLetters[adjacent] 
+				&& !path.Contains(adjacent)) {
+					char letter = cellLetters[
+						adjacent][0];
 					if (parent.ContainsKey(letter)) {
-						List<int> nextCells = new List<int>(searchCells);
+						List<int> nextCells = 
+							new List<int>(
+							path);
 						nextCells.Add(adjacent);
 						ExtendWords(words, 
 							nextCells,
@@ -89,7 +97,6 @@ public class WordGrid
 							word + letter);
 					}
 				}
-
 			}
 		}
 	}
@@ -106,11 +113,11 @@ public class WordGrid
 	public List<string> FindWords(int startCell)
 	{
 		List<string> words = new List<string>();
-		List<int> searchCells = new List<int>(){startCell};
+		List<int> path = new List<int>(){startCell};
 		string prefix = cellLetters[startCell];
 		char letter = prefix[0];
 		if (prefixes.ContainsKey(letter)) {
-			ExtendWords(words, searchCells, prefixes[letter], prefix);
+			ExtendWords(words, path, prefixes[letter], prefix);
 		}
 		return words;
 	}

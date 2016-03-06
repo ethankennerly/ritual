@@ -117,11 +117,11 @@ internal class TestWordGrid
 	}
 
 	[Test]
-	public void FindWordsSnake()
+	public void FindWordsSnakeNotWrap()
 	{
 		WordGrid grid = new WordGrid();
 		grid.SetDictionary(
-		 "AT\nACTION\nAFT\nAFFECTION\nAFFECTIONATE\nAFFECTIONATELY");
+		 "AT\nATE\nACTION\nAFT\nAFFECTION\nAFFECTIONATE\nAFFECTIONATELY");
 		grid.cellLetters = new string[]{
 			 "A", "F", "F", 
 			 "T", "C", "E",
