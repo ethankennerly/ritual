@@ -14,6 +14,7 @@ public class WordGrid
 	public int columnCount;
 	public int rowCount;
 	private int cellCount;
+	private int[] offsets;
 
 	/**
 	 * Construct prefix tree from list of words, one per line.
@@ -42,10 +43,55 @@ public class WordGrid
 	{
 		columnCount = columns;
 		rowCount = rows;
+		cellCount = columnCount * rowCount;
+		offsets = new int[]{
+			- columnCount,
+			columnCount,
+			-1,
+			1,
+			- columnCount - 1,
+			- columnCount + 1,
+			columnCount - 1,
+			columnCount + 1
+		};
 	}
 
-	private void Extending(List<string> words, List<int> path)
+	/**
+	 * Like Darius Bacon's without coroutines; more portable.
+	 * http://stackoverflow.com/questions/746082/how-to-find-list-of-possible-words-from-a-letter-matrix-boggle-solver
+	 */
+	private void ExtendWords(List<string> words, List<int> searchCells, 
+				CharToDictionary parent, string word)
 	{
+		if (parent.ContainsKey(endOfWord) && minimumLength <= word.Length) {
+			if (words.IndexOf(word) <= -1) {
+				int wordIndex;
+				for (wordIndex = 0; wordIndex < words.Count; wordIndex++) {
+					if (words[wordIndex].Length < word.Length) {
+						break;
+					}
+				}
+				words.Insert(wordIndex, word);
+			}
+		}
+		int searchCell = searchCells[searchCells.Count - 1];
+		for (int offsetIndex = 0; offsetIndex < offsets.Length; offsetIndex++) {
+			int adjacent = searchCell + offsets[offsetIndex];
+			if (0 <= adjacent && adjacent < cellCount) {
+				if (null != cellLetters[adjacent] && !searchCells.Contains(adjacent)) {
+					char letter = cellLetters[adjacent][0];
+					if (parent.ContainsKey(letter)) {
+						List<int> nextCells = new List<int>(searchCells);
+						nextCells.Add(adjacent);
+						ExtendWords(words, 
+							nextCells,
+							parent[letter],
+							word + letter);
+					}
+				}
+
+			}
+		}
 	}
 
 	/**
@@ -60,51 +106,11 @@ public class WordGrid
 	public List<string> FindWords(int startCell)
 	{
 		List<string> words = new List<string>();
-		List<int> searchCells = new List<int>();
-		int[] offsets = new int[]{
-			- columnCount,
-			columnCount,
-			-1,
-			1,
-			- columnCount - 1,
-			- columnCount + 1,
-			columnCount - 1,
-			columnCount + 1
-		};
-		cellCount = columnCount * rowCount;
-		searchCells.Add(startCell);
-		CharToDictionary parent = prefixes;
-		bool[] isVisits = new bool[cellLetters.Length];
-		string word = "";
-		while (1 <= searchCells.Count) {
-			int searchCell = searchCells[0];
-			searchCells.Remove(searchCell);
-			char letter = cellLetters[searchCell][0];
-			if (!isVisits[searchCell] && parent.ContainsKey(letter)) {
-				isVisits[searchCell] = true;
-				parent = parent[letter];
-				word += letter;
-				for (int offsetIndex = 0; offsetIndex < offsets.Length; offsetIndex++) {
-					int adjacent = searchCell + offsets[offsetIndex];
-					if (0 <= adjacent && adjacent < cellCount) {
-						if (null != cellLetters[adjacent] && !isVisits[adjacent]) {
-							searchCells.Add(adjacent);
-						}
-					}
-				}
-
-			}
-			if (parent.ContainsKey(endOfWord) && minimumLength <= word.Length) {
-				if (words.IndexOf(word) <= -1) {
-					int wordIndex;
-					for (wordIndex = 0; wordIndex < words.Count; wordIndex++) {
-						if (words[wordIndex].Length < word.Length) {
-							break;
-						}
-					}
-					words.Insert(wordIndex, word);
-				}
-			}
+		List<int> searchCells = new List<int>(){startCell};
+		string prefix = cellLetters[startCell];
+		char letter = prefix[0];
+		if (prefixes.ContainsKey(letter)) {
+			ExtendWords(words, searchCells, prefixes[letter], prefix);
 		}
 		return words;
 	}

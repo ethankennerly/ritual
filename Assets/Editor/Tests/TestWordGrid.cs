@@ -80,6 +80,8 @@ internal class TestWordGrid
 		words = grid.FindWords(3);
 		Assert.AreEqual(1, words.Count, ListToString(words));
 		Assert.AreEqual("ab", words[0]);
+		words = grid.FindWords(4);
+		Assert.AreEqual(0, words.Count, ListToString(words));
 	}
 
 	private WordGrid SetupWishGrid()
@@ -119,7 +121,7 @@ internal class TestWordGrid
 	{
 		WordGrid grid = new WordGrid();
 		grid.SetDictionary(
-		 "AT\nACTION\nAFT\nAFFECTS\nAFFECTIONATE\nAFFECTIONATELY");
+		 "AT\nACTION\nAFT\nAFFECTION\nAFFECTIONATE\nAFFECTIONATELY");
 		grid.cellLetters = new string[]{
 			 "A", "F", "F", 
 			 "T", "C", "E",
@@ -132,7 +134,7 @@ internal class TestWordGrid
 		words = grid.FindWords(0);
 		Assert.AreEqual(5, words.Count, ListToString(words));
 		Assert.AreEqual("AFFECTIONATE", words[0]);
-		Assert.AreEqual("AFFECTS", words[1]);
+		Assert.AreEqual("AFFECTION", words[1]);
 		Assert.AreEqual("ACTION", words[2]);
 		Assert.AreEqual("AFT", words[3]);
 		Assert.AreEqual("AT", words[4]);
